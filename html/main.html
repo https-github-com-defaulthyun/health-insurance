@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보험상품추천사이트</title>
+    <link rel="stylesheet" id="light" href="js&css/main.css">
+    <link rel="stylesheet" id="light" href="js&css/header.css">
+    <link rel="stylesheet" id="light" href="js&css/healthData.css">
+
+    <link rel="stylesheet" id="light" href="js&css/curheader.css">
+
+    <script src="js&css/darkmode.js"></script>
+    <script src="js&css/modal.js"></script>
+    <script src="js&css/scrollto.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+ 
+    <script>
+        $(document).ready(function() {
+            $(".otherheader").on('mouseenter mouseleave',function () {
+                $(".curheader").toggleClass('hover');
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <!--modal-->
+    <div id="modal" class="modalbackground">
+        <div class="modalbox">
+            <div class="content">
+                <form>
+                    <fieldset>
+                        <h1 class="loginH1">로그인</h1>
+                        <!--아이디-->
+                        아이디<br><input type="text" name="id" placeholder="ID를 입력하세요."><br><br>
+                        <!--비밀번호-->
+                        비밀번호 <br><input type="password" name="PW" id="PW" placeholder="비밀번호를 입력하세요."><br><br>
+                        <hr>
+                        <br>
+                
+                        <!--회원가입 버튼-->
+                        <input type="button" onClick="offClick()" value="로그인" class="loginBtn">
+                        <input type="button" onClick="location.href='signup.html'" value="회원가입">
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--header-->
+    <div>
+        <!--Header Title (Left)-->
+        <div class="headertitleleft">
+            <h2><a href="main.html">Group1</a></h2>
+        </div>
+        <!--Header Button (Right)-->
+        <div class="headertitleright">
+            <button type="button" onclick="Darkmode()" value="Dark Mode"><img src="img/dark.png" alt="button"
+                    width="40px"></button>
+        </div>
+        <!--header-->
+        <header class="header">
+            <!--header - nav-->
+            <nav class="headernav">
+
+                <span>
+                    <a class="curheader" onclick=>보험 추천받기</a>
+                </span>
+                <span>
+                    <a class="otherheader" onclick=>취급 보험사</a>
+                </span>
+                <span>
+                    <a class="otherheader" onclick=>전체 보험 상품</a>
+                </span> 
+                <span>
+                    <a class="otherheader" onclick="location.href='healthData.html'">나의 건강정보</a>
+                </span>
+                <span>
+                    <a class="otherheader" onclick=>마이페이지</a>
+                </span>
+            </nav>
+        </header>
+    </div>
+    </div>
+    <div class="blank"></div>
+    <div class="healthContainer">
+        <div class="section">
+            <input type="radio" name="slide" id="slide01" checked>
+            <input type="radio" name="slide" id="slide02">
+            <input type="radio" name="slide" id="slide03">
+            <input type="radio" name="slide" id="slide04">
+            <input type="radio" name="slide" id="slide05">
+            <input type="radio" name="slide" id="slide06">
+            <input type="radio" name="slide" id="slide07">
+            <input type="radio" name="slide" id="slide08">
+            <input type="radio" name="slide" id="slide09">
+            <div class="slidewrap">
+                <ul class="slidelist">
+                    <!-- 슬라이드 영역 -->
+                    <li class="slideitem">
+                        <a>
+                            
+                            <div class="textbox">
+                                <h3>시작하기</h3>
+                                <p>건강 정보를 입력해 주세요.<br>건강 정보를 토대로 맞춤형 보험 상품을 추천해드립니다.</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="slideitem">
+                        <a>
+                            <div class="textbox">
+                                <h3>혈압</h3>
+                                <p>혈압은 평균수치로 입력하시면 되며 ...</p>
+                                <div><input type="number" name="BP" id="BP" placeholder="혈압을 입력해주세요.">
+                                <a>&nbsp; mmHg</a></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="slideitem">
+                        <a>
+                            
+                            <div class="textbox">
+                                <h3>심전도</h3>
+                                <p>심전도 측정으로 심장병 초기 증상을 대처할 수 있습니다.<br> 심전도는 평균 ...</p>
+                                <div><input type="number" name="ECG" id="ECG" placeholder="심전도를 입력해주세요.">
+                                    <a>&nbsp; bpm</a></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="slideitem">
+                        <a>
+                            
+                            <div class="textbox">
+                                <h3>혈중산소포화도(SpO2)</h3>
+                                <p>혈중 산소 포화도 측정을 통해 ... 을 예방 가능합니다.<br>혈중 산소 포화도는 ... 측정해주세요.</p>
+                                <div><input type="number" name="BOS" id="BOS" placeholder="혈중산소포화도를 입력해주세요.">
+                                    <a>&nbsp; %</a></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="slideitem">
+                        <a>
+                            
+                            <div class="textbox">
+                                <h3>체지방률</h3>
+                                <p>체지방률 계산 방법은...(계산기)<br>체지방률 측정으로 예방 가능은 ...<br> 측정 방법은...</p>
+                                <div><input type="number" name="BFP" id="BFP" placeholder="체지방률을 입력해주세요.">
+                                    <a>&nbsp; %</a></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="slideitem">
+                        <a>
+                            
+                            <div class="textbox">
+                                <h3>골격근량</h3>
+                                <p>골격근량 계산 방법은...(계산기)<br>골격근량 측정으로 예방 가능은 ...<br> 측정 방법은...</p>
+                                <div><input type="number" name="SMM" id="SMM" placeholder="골격근량을 입력해주세요.">
+                                    <a>&nbsp; kg</a></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="slideitem">
+                        <a>
+                            
+                            <div class="textbox">
+                                <h3>체수분량</h3>
+                                <p>체수분이란...<br>적정 체수분은 남자는 ... 여자는 ...<br>1일 적정 수분 섭취량 ...L</p>
+                                <div><input type="number" name="MBW" id="MBW" placeholder="체수분량을 입력해주세요.">
+                                    <a>&nbsp; %</a></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="slideitem">
+                        <a>
+                            
+                            <div class="textbox">
+                                <h3>기초대사량</h3>
+                                <p>기초대사량이란...<br>기초대사량 계산기...<br>측정 방법은...<br>평균 기초대사량은...</p>
+                                <div><input type="number" name="BM" id="BM" placeholder="기초대사량을 입력해주세요.">
+                                    <a>&nbsp; kcal</a></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="slideitem">
+                        <a>
+                            
+                            <div class="textbox">
+                                <h3>최종 확인</h3>
+                                <p>***님의<br>혈압은...<br>심전도는...<br>혈중산소포화도는...<br>체지방률은...<br>전부 맞다면 오른쪽 제출 버튼을 눌러주세요.</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <img src="img/paging/slide.jpg"/>
+                        </a>
+                    </li>
+        
+                    <!-- 좌,우 슬라이드 버튼 -->
+                    <div class="slide-control">
+                        <div>
+                            <label for="slide02" class="right"></label>
+                        </div>
+                        <div>
+                            <label for="slide01" class="left"></label>
+                            <label for="slide03" class="right"></label>
+                        </div>
+                        <div>
+                            <label for="slide02" class="left"></label>
+                            <label for="slide04" class="right"></label>
+                        </div>
+                        <div>
+                            <label for="slide03" class="left"></label>
+                            <label for="slide05" class="right"></label>
+                        </div>
+                        <div>
+                            <label for="slide04" class="left"></label>
+                            <label for="slide06" class="right"></label>
+                        </div>
+                        <div>
+                            <label for="slide05" class="left"></label>
+                            <label for="slide07" class="right"></label>
+                        </div>
+                        <div>
+                            <label for="slide06" class="left"></label>
+                            <label for="slide08" class="right"></label>
+                        </div>
+                        <div>
+                            <label for="slide07" class="left"></label>
+                            <label for="slide09" class="right"></label>
+                        </div>
+                        <div>
+                            <label for="slide08" class="left"></label>
+                            <label onclick=showResult() class="submit"></label>
+                        </div>
+                    </div>
+        
+                </ul>
+                <!-- 페이징 -->
+            </div>
+            <ul class="slide-pagelist">
+                <li><label for="slide01">시작하기</label></li>
+                <li><label for="slide02">혈압</label></li>
+                <li><label for="slide03">심전도</label></li>
+                <li><label for="slide04">혈중산소포화도</label></li>
+                <li><label for="slide05">체지방률</label></li>
+                <li><label for="slide06">골격근량</label></li>
+                <li><label for="slide07">체수분</label></li>
+                <li><label for="slide08">기초대사량</label></li>
+            </ul>
+        
+            
+        </div>
+    </div>
+    <div class="blankbottom"></div>
+    <h1 class="resultH1">***님께 추천해드리는 보험</h1>
+    <div class="result">
+        <div class="resultContainer">
+        </div>
+    </div>
+    <!--footer-->
+    <footer>
+        데이터베이스 및 실습 1조 B789055 전성태, ...<br>주제:
+    </footer>
+</body>
+
+</html>
