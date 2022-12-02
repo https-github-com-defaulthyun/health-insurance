@@ -13,8 +13,36 @@
     height: 61px;
     z-index: 11;
     float: right;
-    right: 50px;
-    top: 2%;
+    right: 3.5%;
+    top: 1.75%;
+}
+.headertitleright #logout{
+    position: fixed;
+    top:5.1%;
+    right: 3.6%;
+    font-size: 0.9em;
+    color: rgb(77, 138, 216);
+    cursor: pointer;
+}
+
+.headertitleright img{
+    cursor: pointer;
+}
+
+.headertitleright .name{
+    position: fixed;
+    right: 8.6%;
+    top: 1.8%;
+    font-size: 1.1em;
+    color:gray;
+}
+
+.headertitleright .sla{
+    position: fixed;
+    right: 7.4%;
+    top: 1.8%;
+    font-size: 1.1em;
+    color:gray;
 }
 
 .headertitleright button {
@@ -88,4 +116,19 @@ span>a:hover::after {
 
 span>a:visited {
     color: black;
+}
+
+footer {
+    font-size: smaller;
+    border-top: 1px solid hsl(0, 1%, 72%);
+    border-bottom: 0px;
+    position: absolute;
+    top:100vh;
+    width: 98%;
+    z-index: 10;
+    line-height: 20px;
+    padding: 13px;
+    text-align: center;
+    background-color: rgb(246, 248, 249);
+    box-shadow: 1px 1px 5px rgb(181, 179, 179);
 }

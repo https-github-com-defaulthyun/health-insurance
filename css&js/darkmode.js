@@ -3,18 +3,18 @@ const theme = document.querySelector("#light");
 const newTheme = localStorage.getItem('currentTheme');
 
     if (newTheme == "black") { 
-        theme.href = "js&css/black.css"; 
+        theme.href = "css&js/black.css"; 
     } 
     else{
-        theme.href = "js&css/main.css"; 
+        theme.href = "css&js/main.css"; 
     }
 
     function Darkmode() { 
-    if (theme.getAttribute("href") == "js&css/white.css") { 
-        theme.href = "js&css/black.css"; 
+    if (theme.getAttribute("href") == "css&js/white.css") { 
+        theme.href = "css&js/black.css"; 
         localStorage.setItem('currentTheme', 'black');
         } else { 
-        theme.href = "js&css/white.css"; 
+        theme.href = "css&js/white.css"; 
         localStorage.setItem('currentTheme', 'white');
         } 
     };

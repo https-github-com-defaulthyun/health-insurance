@@ -2,24 +2,8 @@ body {
     height: 100vh;
     background-color: rgb(239, 239, 239);;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    overflow: hidden;
 }
 
-
-footer {
-    font-size: smaller;
-    border-top: 1px solid hsl(0, 1%, 72%);
-    border-bottom: 0px;
-    position: relative;
-    top:80vh;
-    width: 99%;
-    z-index: 10;
-    line-height: 20px;
-    padding: 13px;
-    text-align: center;
-    background-color: rgb(246, 248, 249);
-    box-shadow: 1px 1px 5px rgb(181, 179, 179);
-}
 
 #modal.modalbackground {
     width: 100%;
@@ -32,7 +16,7 @@ footer {
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
     z-index: 13;
-    margin: -10px;
+    margin: -0.65%;
 }
 #modal .modalbox {
     background: rgba(255, 255, 255, 0.828);
@@ -58,7 +42,7 @@ footer {
     color : rgb(18, 99, 239);
 }
 
-input{
+input:not([type='radio']){
     margin-top: 2%;
     width : 350px;
     height: 30px;
@@ -99,25 +83,59 @@ input[type='button']{
     margin: 10% 0;
 }
 
-.resultH1{
+.radio span {
+    vertical-align: middle;
+    margin-left: 8%;
+    font-size: 1.1em;
+  }
+  
+  [type="radio"] {
+    vertical-align: middle;
+    appearance: none;
+    border: max(2px, 0.1em) solid gray;
+    border-radius: 50%;
+    width: 1.25em;
+    height: 1.25em;
+    transition: border 0.5s ease-in-out;
+    margin-bottom: 1%;
+  }
+  
+  [type="radio"]:checked {
+    border: 0.6em solid rgb(18, 99, 239);
+  }
+  
+  [type="radio"]:focus-visible {
+    outline-offset: max(2px, 0.1em);
+    outline: max(2px, 0.1em) dotted tomato;
+  }
+  
+  [type="radio"]:hover {
+    box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+    cursor: pointer;
+  }
+  
+  [type="radio"]:disabled {
+    background-color: lightgray;
+    box-shadow: none;
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  [type="radio"]:disabled + span {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .radio {
     position: relative;
-    top:30vh;
-    text-align: center;
-}
-
-.result{
-    position: relative;
-    top:31vh;
-    display: flex;
+    left: -8.5%;
+    margin-top: 2%;
     justify-content: center;
-    align-items: center;
-}
+  }
 
-.resultContainer{
-    position: relative;
-    width:70%;
-    height: 70vh;
-    border:0px solid rgba(106, 104, 104, 0.6);
-    border-radius: 20px;
-    background-color: white;
-}
+  .textbox > p > a{
+    color:rgb(18, 99, 239);
+  }
+  .textbox > ul > li > a{
+    color:rgb(18, 99, 239);
+  }

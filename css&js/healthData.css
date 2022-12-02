@@ -93,7 +93,16 @@
     transition: all .5s;
 }
 
-.section .slidelist .textbox input {
+.section .slidelist .textbox ul {
+    font-size: 16px;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all .5s;
+    text-align: left;
+    margin-bottom: 3%;
+}
+.section .slidelist .textbox input:not([type='radio']) {
     width: 27vh;
     font-size: 14px;
     color: black;
@@ -148,9 +157,6 @@
     transform: translateX(-700%);
 }
 
-.section input[id="slide09"]:checked~.slidewrap .slidelist>li {
-    transform: translateX(-800%);
-}
 
 /* input에 체크되면 텍스트 효과 */
 .section input[id="slide01"]:checked~.slidewrap li:nth-child(1) .textbox h3 {
@@ -165,13 +171,19 @@
     transition-delay: .4s;
 }
 
+.section input[id="slide01"]:checked~.slidewrap li:nth-child(1) .textbox div {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: .6s;
+}
+
 .section input[id="slide02"]:checked~.slidewrap li:nth-child(2) .textbox h3 {
     opacity: 1;
     transform: translateY(0);
     transition-delay: .2s;
 }
 
-.section input[id="slide02"]:checked~.slidewrap li:nth-child(2) .textbox p {
+.section input[id="slide02"]:checked~.slidewrap li:nth-child(2) .textbox ul {
     opacity: 1;
     transform: translateY(0);
     transition-delay: .4s;
@@ -189,7 +201,7 @@
     transition-delay: .2s;
 }
 
-.section input[id="slide03"]:checked~.slidewrap li:nth-child(3) .textbox p {
+.section input[id="slide03"]:checked~.slidewrap li:nth-child(3) .textbox ul {
     opacity: 1;
     transform: translateY(0);
     transition-delay: .4s;
@@ -213,6 +225,12 @@
     transition-delay: .4s;
 }
 
+.section input[id="slide04"]:checked~.slidewrap li:nth-child(4) .textbox ul {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: .4s;
+}
+
 .section input[id="slide04"]:checked~.slidewrap li:nth-child(4) .textbox div {
     opacity: 1;
     transform: translateY(0);
@@ -231,6 +249,12 @@
     transition-delay: .4s;
 }
 
+.section input[id="slide05"]:checked~.slidewrap li:nth-child(5) .textbox ul {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: .4s;
+}
+
 .section input[id="slide05"]:checked~.slidewrap li:nth-child(5) .textbox div {
     opacity: 1;
     transform: translateY(0);
@@ -243,7 +267,7 @@
     transition-delay: .2s;
 }
 
-.section input[id="slide06"]:checked~.slidewrap li:nth-child(6) .textbox p {
+.section input[id="slide06"]:checked~.slidewrap li:nth-child(6) .textbox ul {
     opacity: 1;
     transform: translateY(0);
     transition-delay: .4s;
@@ -267,6 +291,12 @@
     transition-delay: .4s;
 }
 
+.section input[id="slide07"]:checked~.slidewrap li:nth-child(7) .textbox ul {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: .4s;
+}
+
 .section input[id="slide07"]:checked~.slidewrap li:nth-child(7) .textbox div {
     opacity: 1;
     transform: translateY(0);
@@ -279,34 +309,22 @@
     transition-delay: .2s;
 }
 
-.section input[id="slide08"]:checked~.slidewrap li:nth-child(8) .textbox p {
+.section input[id="slide08"]:checked~.slidewrap li:nth-child(8) .textbox p{
     opacity: 1;
     transform: translateY(0);
     transition-delay: .4s;
 }
 
-.section input[id="slide08"]:checked~.slidewrap li:nth-child(8) .textbox div {
+.section input[id="slide08"]:checked~.slidewrap li:nth-child(8) .textbox ul {
     opacity: 1;
     transform: translateY(0);
     transition-delay: .6s;
 }
 
-.section input[id="slide09"]:checked~.slidewrap li:nth-child(9) .textbox h3 {
+.section input[id="slide08"]:checked~.slidewrap li:nth-child(8) .textbox .p2 {
     opacity: 1;
     transform: translateY(0);
-    transition-delay: .2s;
-}
-
-.section input[id="slide09"]:checked~.slidewrap li:nth-child(9) .textbox p {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: .4s;
-}
-
-.section input[id="slide09"]:checked~.slidewrap li:nth-child(9) .textbox div {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: .6s;
+    transition-delay: .8s;
 }
 
 /* 좌,우 슬라이드 버튼 */
@@ -361,10 +379,6 @@
     display: block;
 }
 
-.section input[id="slide09"]:checked~.slidewrap .slide-control>div:nth-child(9) {
-    display: block;
-}
-
 
 /* 페이징 */
 .slide-pagelist {
@@ -382,7 +396,7 @@
     padding: 6px 20px;
     border-radius: 30px;
     background: rgb(128, 127, 127);
-    margin: 15px 5px;
+    margin: 15px 4.5px;
     cursor: pointer;
     font-size: 0.9em;
     color:white;
@@ -419,4 +433,34 @@
 
 .section input[id="slide08"]:checked~.slide-pagelist>li:nth-child(8)>label {
     background: rgb(18, 99, 239);
+}
+
+label.disabled1 { 
+    pointer-events: none;
+    opacity: 0.5; 
+}
+label.disabled2 { 
+    pointer-events: none;
+    opacity: 0.5; 
+}
+label.disabled3 { 
+    pointer-events: none;
+    opacity: 0.5; 
+}
+label.disabled4 { 
+    pointer-events: none;
+    opacity: 0.5; 
+}
+label.disabled5 { 
+    pointer-events: none;
+    opacity: 0.5; 
+}
+label.disabled6 { 
+    pointer-events: none;
+    opacity: 0.5; 
+}
+
+label.disabled7 { 
+    pointer-events: none;
+    opacity: 0.5; 
 }

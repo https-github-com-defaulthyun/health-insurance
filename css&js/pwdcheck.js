@@ -27,3 +27,7 @@ function idncheck() {
         return false;
     }
 }
+
+function login(){
+    localStorage.setItem('loggin', 'true');
+}
