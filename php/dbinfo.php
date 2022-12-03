@@ -1,5 +1,9 @@
+
+<!-- DB Base -->
+<!--  include_once("./dbinfo.php");  = C언어 #include -->
+
 <?php
-    # DB 접속 부분 반복되므로 include로 따로 뺌
+    # DB 접속 부분 
     $db = 
     '(DESCRIPTION =
         (ADDRESS_LIST=

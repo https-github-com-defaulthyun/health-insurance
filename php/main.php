@@ -1,44 +1,47 @@
 <?php    
-    # C언어 include와 똑같은 의미
-    include_once('./dbinfo.php');
     
     # GET 또는 POST 요청을 통해 전달되거나 쿠키를 통해 전달된 세션 식별자를 기반으로 세션을 생성하거나 현재 세션을 재개
     session_start();
     
-    $userid = $_SESSION['ID'];
+    # C언어 include와 똑같은 의미
+    include_once('./dbinfo.php');    
 
+    // 회원가입 시 ID/PW 불러옴 
+    $userid = $_SESSION['ID']; 
+    $userpassword = $_SESSION['PW'];
+    $encrypted_password = null;
     
-    if (!is_null($_SESSION['ID'])) {
+    if(!is_null($userid)) {
 
-        # 사용하려는 SQL문 
-        $sql = "SELECT * FROM CUSTOMERINFO WHERE ID='$userid'";
-
-        # SQL문 파싱
-        $stid = oci_parse($connect, $sql);
-
-        # 사용 할 SQL문 DB로 전송
-        oci_execute($stid);
-
-        # 쿼리의 다음 결과 집합 행을 포함하는 배열 반환 -> 각 배열 항목은 행의 열에 해당
-        while (($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS))) {
-            $username = $row['NAME'];
-            $usersex = $row['SEX'];
-            $userphonenumber = $row['PHONENUM'];
-            
+        $sql = "SELECT PASSWORD from CUSTOMERINFO WHERE ID='$userid'";
+        $result = oci_parse($connect, $sql);
+        oci_execute($result);
+        
+        # 쿼리의 다음 결과 집합 행을 포함하는 배열을 반환
+        while ($row = oci_fetch_array($result, OCI_ASSOC+OCI_RETURN_NULLS) ) {
+            foreach ($row as $item){
+                $encrypted_password = $item;
+            }
         }
         
-        # 나이 관련 출력 
-        $sql_2 = "SELECT TRUNC(MONTHS_BETWEEN(SYSDATE, BIRTH)/12) AS AGE FROM CUSTOMERINFO;";
-        $stid2 = oci_parse($con, $sql_2);
-        
-        oci_execute($stid2);
-        while (($row2 = oci_fetch_array($stid2, OCI_ASSOC+OCI_RETURN_NULLS))) {
-            $userbirth = $row['BIRTH'];
+        # 패스워드 복호화
+        if ( password_verify( $password, $encrypted_password )) {
+            session_start();
+
+            $_SESSION['userid'] = $userid;
+
+            echo "<script type='text/javascript'>
+            window.onload = function(){
+                loginmodal();
+                getNames();
+            }</script>";
         }
-        oci_free_statement($result); // 메모리 반환
-        oci_close($con); // 오라클 종료
-        
-        } 
+    }
+
+    // DB 메모리 할당 및 연결 해제 
+    oci_free_statement($stid);
+    oci_close($connect);
+
 ?>
 
 <!DOCTYPE html>
@@ -69,37 +72,32 @@
         <div class="modalbox">
             <div class="content">
                 <!-- POST 방식으로 넘겨야 됨 -->
-                <form method="post" action="">
+                <form method="post" action="main.php">
                     <fieldset>
                         <h1 class="loginH1">로그인</h1>
                         <!--아이디-->
-                        아이디<br><input type="text" name="id" placeholder="ID를 입력하세요."><br><br>
+                        아이디<br><input type="text" name="ID" placeholder="ID를 입력하세요."><br><br>
                         <!--비밀번호-->
                         비밀번호 <br><input type="password" name="PW" id="PW" placeholder="비밀번호를 입력하세요."><br><br>
                         <hr>
                         <br>
                 
                         <!--회원가입 버튼-->
-                        <input type="button" onClick="offClick()" value="로그인" class="loginBtn">
-                        <input type="button" onClick="location.href='signup.php'" value="회원가입">
+                        <input type="submit" value="로그인" class="loginBtn">
+                        <input type="button" onClick="location.href='http://software.hongik.ac.kr/a_team/a_team1/login_register/signup.php'" value="회원가입">
                     </fieldset>
                 </form>
             </div>
         </div>
     </div>
+    
 
-    <script type="text/javascript">
-        window.onload = function(){
-            loginmodal();
-            getNames();
-        }
-       </script>
     
     <!--header-->
     <div>
         <!--Header Title (Left)-->
         <div class="headertitleleft">
-            <h2><a href="main.php">DB설계</a></h2>
+            <h2><a href="./main.php">DB설계</a></h2>
         </div>
         <!--Header Button (Right)-->
         <div class="headertitleright">
@@ -130,6 +128,12 @@
         </header>
     </div>
     </div>
+
+
+    
+
+
+
     <div class="blank"></div>
     <div class="healthContainer">
         <div class="section">
@@ -153,10 +157,10 @@
                                     <a>&nbsp; 살</a><br>
                                     &nbsp;&nbsp;&nbsp;&nbsp; 키 : <input type="number" name="height" id="height" value="174"><!--value부분에 키-->
                                     <a>&nbsp; cm</a><br>
-                                     체중 : <input type="number" name="weight" id="weight" value="70"><!--value부분에 몸무게-->
+                                    체중 : <input type="number" name="weight" id="weight" value="70"><!--value부분에 몸무게-->
                                     <a>&nbsp; kg</a><br>
                                     <div class="radio">
-                                     <a>성별 : </a>  <!--이부분에 성별-->
+                                        <a>성별 : </a>  <!--이부분에 성별-->
                                         <span id="sex">남</span>
                                         <input type="radio" name="sex" value="man" checked />
                                         <span id="sex">여</span>
@@ -167,7 +171,7 @@
                         </a>
                     </li>
                     <li class="slideitem">
-                        <a>
+                        <a></a>
                             <div class="textbox">
                                 <h3>혈압</h3>
                                 <ul>

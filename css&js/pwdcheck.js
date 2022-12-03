@@ -17,8 +17,9 @@ function pwdcheck() {
 function idncheck() {
     var i1 = document.getElementById('idn').value;
     var i2 = document.getElementById('idnb').value;
+    
     if (i1.length == 6 && i2.length == 7) {
-        location.href = "main.html";
+        location.href = "main.php";
         return true;
 
     }
