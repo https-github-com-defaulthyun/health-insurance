@@ -4,11 +4,13 @@
  
  실제 서버 폴더 구조
  
- ├─해당언어
-│  │ 
-│  ├─ img
-│  ├─ css&js
-│  │      
-│  └─ allnss.php
-│  └─ login.php
-│  └─ mypage.php
+ ├─ a_team1
+ │  │ 
+ │  ├─ img
+ │  ├─ css&js
+ │  │      
+ │  └─ allnss.php
+ │  └─ login.php 
+ │  └─ mypage.php
+ │  └─ mypage.php
+ │  └─ main.php
