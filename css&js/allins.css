@@ -1,0 +1,40 @@
+.result{
+    position: relative;
+    top:15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3%;
+}
+
+.insContainer{
+    position: relative;
+    width:80%;
+    height: 80vh;
+    border:0px solid rgba(106, 104, 104, 0.6);
+    border-radius: 20px;
+    background-color: white;
+    text-align: center;
+}
+
+.divCon{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    margin: 4.5%;
+    height: 38%;
+}
+
+.divCon span{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    float: left;
+    width: 25%;
+    height: 90%;
+    margin: 3%;
+    border: 1px solid black;
+    border-radius: 10px;
+}

@@ -104,6 +104,8 @@ function recommand() {
         }        
     }
 
+    let warningList = []
+    let dangerList = []
     var feedback = ''
     for (const [key, value] of Object.entries(healthDict)) {
         if(value !== '입력 안됨'){
@@ -111,27 +113,52 @@ function recommand() {
             switch (key) {
                 case 'BP':
                     name = '혈압'
+                    dan = 'highbp'
+                    dan2 = 'brain'
                     break;
                 case 'BOS':
                     name = '혈중 산소 포화도'
+                    dan = 'heart'
+                    dan2 = 'brain'
                     break;
                 case 'BFP' :
                     name = '체지방률'
+                    dan = 'diabetes'
+                    dan2 = 'expenses'
                     break;
                 case 'SMM' : 
                     name = '골격근량'
+                    dan = 'expenses'
+                    dan2 = null
                     break;
                 case 'MBW' :
                     name = '체수분'
+                    if(value === '낮음') dan = 'hignbp'
+                    else if (value === '높음') dan = 'heart'
+                    else dan = null
+                    dan2 = null
                     break;
                 case 'BM' :
-                    name = '기초대사량'    
+                    name = '기초대사량'   
+                    dan = 'heart' 
+                    dan2 = null
                     break;
             }
-            var str = name + ' : ' + value + '<br>'
+            if(value === '정상' || value === '표준' || value === '입력안됨') var str = name + ' : ' + value + '<br>'
+            else if (value ==='고혈압' || value ==='위독' || value === '과비만' || value ==='위험'){
+                var str = name + ' : <a class="danger">'+ value + '</a><br>'
+                if (dan !== null && !(dan in warningList)) dangerList.push(dan)
+                if(dan2 !== null && !(dan2 in warningList)) dangerList.push(dan2)
+            }
+            else {
+                var str = name + ' : <a class="notNormal">'+ value + '</a><br>'
+                if (dan !== null && !(dan in warningList)) warningList.push(dan)
+                if(dan2 !== null && !(dan2 in warningList)) warningList.push(dan2)
+            }
             feedback = feedback + str
         }
       }
-    // console.log(healthDict);
+    localStorage.setItem('warning', warningList);
+    localStorage.setItem('danger', dangerList);
     return feedback;
 }

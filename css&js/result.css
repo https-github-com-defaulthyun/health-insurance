@@ -56,6 +56,18 @@ body {
     line-height: 200%;
 }
 
+.healthinfoContainer .notNormal{
+    font-size: 1em;
+    font-weight: 700;
+    color: rgb(18, 99, 239);
+}
+
+.healthinfoContainer .danger{
+    font-size: 1em;
+    font-weight: 700;
+    color: rgb(235, 73, 73);
+}
+
 #foot {
     font-size: smaller;
     border-top: 1px solid hsl(0, 1%, 72%);
