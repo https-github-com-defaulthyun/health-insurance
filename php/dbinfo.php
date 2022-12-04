@@ -16,10 +16,10 @@
         
         # Oracle DB 서버 ID/PW
         $username = "DBA2022G1";
-        $password = "test1234";
+        $userpassword = "test1234";
         
         # Oracle DB 서버 접속
-        $connect = oci_connect($username, $password , $db);
+        $connect = oci_connect($username, $userpassword , $db);
 
         # 연결 오류 시 Oracle 오류 메시지 표시
         if (!$connect) {

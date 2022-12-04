@@ -31,12 +31,12 @@ function logOut() {
     window.scrollTo({ top: 0});
     localStorage.setItem('isResult', 'false');
     localStorage.setItem('loggin', 'false');
-    location.href = "./main.php";
+    location.href = "main.php";
 }
 
 function toResult(){
     if(localStorage.getItem('isResult') === 'true'){
-        location.href = "./result.php";
+        location.href = "result.php";
     }
     else alert("먼저 건강 정보를 입력해주세요.")
 }

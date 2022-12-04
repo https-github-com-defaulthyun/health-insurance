@@ -1,49 +1,3 @@
-<?php    
-    
-    # GET 또는 POST 요청을 통해 전달되거나 쿠키를 통해 전달된 세션 식별자를 기반으로 세션을 생성하거나 현재 세션을 재개
-    session_start();
-    
-    # C언어 include와 똑같은 의미
-    include_once('./dbinfo.php');    
-
-    // 회원가입 시 ID/PW 불러옴 
-    $userid = $_SESSION['ID']; 
-    $userpassword = $_SESSION['PW'];
-    $encrypted_password = null;
-    
-    if(!is_null($userid)) {
-
-        $sql = "SELECT PASSWORD from CUSTOMERINFO WHERE ID='$userid'";
-        $result = oci_parse($connect, $sql);
-        oci_execute($result);
-        
-        # 쿼리의 다음 결과 집합 행을 포함하는 배열을 반환
-        while ($row = oci_fetch_array($result, OCI_ASSOC+OCI_RETURN_NULLS) ) {
-            foreach ($row as $item){
-                $encrypted_password = $item;
-            }
-        }
-        
-        # 패스워드 복호화
-        if ( password_verify( $password, $encrypted_password )) {
-            session_start();
-
-            $_SESSION['userid'] = $userid;
-
-            echo "<script type='text/javascript'>
-            window.onload = function(){
-                loginmodal();
-                getNames();
-            }</script>";
-        }
-    }
-
-    // DB 메모리 할당 및 연결 해제 
-    oci_free_statement($stid);
-    oci_close($connect);
-
-?>
-
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -66,6 +20,83 @@
 
 </head>
 
+
+<?php    
+    // # 500 에러 시 확인 (디버깅용)
+    // error_reporting(E_ALL);
+    // ini_set('display_errors', '1');
+    
+    # 세션 스타트
+    session_start();
+
+    # php 버전 5.5 미만일 때 password hash함수를 사용 하지 못 할때 password 암호화 위하여 사용 ( 현재 학교 php 버전 : PHP 5.4.16 )
+    include_once("./password_compat.php");
+        
+    // 회원가입 시 ID/PW 불러옴 
+    $id = $_POST['ID']; 
+    $password = $_POST['PW'];
+    $encrypted_password = null;
+
+    # id, password 중복 판별 변수 선언 및 체크값 선언 
+    $wu = 0;
+    $wp = 0;
+    
+    # DB 접속 부분 
+    $db = 
+        '(DESCRIPTION =
+            (ADDRESS_LIST=
+                (ADDRESS = (PROTOCOL = TCP)(HOST = 203.249.87.57)(PORT = 1521))
+            )
+                (CONNECT_DATA =
+                    (SID = orcl)
+                )
+            )';
+            
+    # Oracle 학교 DB 서버 ID/PW
+    $username = "DBA2022G1";
+    $userpassword = "test1234";
+
+    
+    if(!is_null($id)) {
+        
+        # Oracle DB 서버 접속
+        $connect = oci_connect($username, $userpassword , $db); 
+        
+        $sql = "SELECT CUSTOMER_PASSWORD from CUSTOMERINFO WHERE ID='$id'";
+        $result = oci_parse($connect, $sql);
+        oci_execute($result);
+
+        # 쿼리의 다음 결과 집합 행을 포함하는 배열을 반환
+        while ($row = oci_fetch_array($result, OCI_ASSOC) ) {
+            foreach ($row as $item){
+                $encrypted_password = $item;
+            }
+        }
+        if ( is_null( $encrypted_password ) ) {
+            $wu = 1;
+        }
+        
+        # 패스워드 복호화
+        else if ( password_verify( $password, $encrypted_password )) {
+            session_start();
+            echo "<script type='text/javascript'>
+            window.onload = function(){
+                loginmodal();
+                getNames();
+            }</script>";
+        }
+
+        else{
+            $wp = 1;
+        }
+    }
+
+    // DB 메모리 할당 및 연결 해제 
+    oci_free_statement($stid);
+    oci_close($connect);
+
+?>
+
 <body>
     <!--modal-->
     <div id="modal" class="modalbackground">
@@ -81,18 +112,22 @@
                         비밀번호 <br><input type="password" name="PW" id="PW" placeholder="비밀번호를 입력하세요."><br><br>
                         <hr>
                         <br>
-                
                         <!--회원가입 버튼-->
                         <input type="submit" value="로그인" class="loginBtn">
-                        <input type="button" onClick="location.href='http://software.hongik.ac.kr/a_team/a_team1/login_register/signup.php'" value="회원가입">
+                        <input type="button" onClick="location.href='http://software.hongik.ac.kr/a_team/a_team1/signup.php'" value="회원가입">
                     </fieldset>
+                <?php
+                    if ($wu == 1) {
+                        echo "<script>alert('아이디가 존재하지 않습니다.');</script>";
+                    }
+                    if ($wp == 1) {
+                        echo "<script>alert('비밀번호가 틀렸습니다');</script>";
+                    }
+                ?>
                 </form>
             </div>
         </div>
     </div>
-    
-
-    
     <!--header-->
     <div>
         <!--Header Title (Left)-->
