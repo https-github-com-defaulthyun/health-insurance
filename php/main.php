@@ -1,49 +1,3 @@
-<?php    
-    
-    # GET 또는 POST 요청을 통해 전달되거나 쿠키를 통해 전달된 세션 식별자를 기반으로 세션을 생성하거나 현재 세션을 재개
-    session_start();
-    
-    # C언어 include와 똑같은 의미
-    include_once('./dbinfo.php');    
-
-    // 회원가입 시 ID/PW 불러옴 
-    $userid = $_SESSION['ID']; 
-    $userpassword = $_SESSION['PW'];
-    $encrypted_password = null;
-    
-    if(!is_null($userid)) {
-
-        $sql = "SELECT PASSWORD from CUSTOMERINFO WHERE ID='$userid'";
-        $result = oci_parse($connect, $sql);
-        oci_execute($result);
-        
-        # 쿼리의 다음 결과 집합 행을 포함하는 배열을 반환
-        while ($row = oci_fetch_array($result, OCI_ASSOC+OCI_RETURN_NULLS) ) {
-            foreach ($row as $item){
-                $encrypted_password = $item;
-            }
-        }
-        
-        # 패스워드 복호화
-        if ( password_verify( $password, $encrypted_password )) {
-            session_start();
-
-            $_SESSION['userid'] = $userid;
-
-            echo "<script type='text/javascript'>
-            window.onload = function(){
-                loginmodal();
-                getNames();
-            }</script>";
-        }
-    }
-
-    // DB 메모리 할당 및 연결 해제 
-    oci_free_statement($stid);
-    oci_close($connect);
-
-?>
-
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -63,16 +17,14 @@
     <script src="css&js/healthInput.js"></script>
     <script src="css&js/recommand.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-
 </head>
-
 <body>
     <!--modal-->
     <div id="modal" class="modalbackground">
         <div class="modalbox">
             <div class="content">
                 <!-- POST 방식으로 넘겨야 됨 -->
-                <form method="post" action="main.php">
+                <form method="post" action="checkLogin.php">
                     <fieldset>
                         <h1 class="loginH1">로그인</h1>
                         <!--아이디-->
@@ -81,27 +33,30 @@
                         비밀번호 <br><input type="password" name="PW" id="PW" placeholder="비밀번호를 입력하세요."><br><br>
                         <hr>
                         <br>
-                
                         <!--회원가입 버튼-->
                         <input type="submit" value="로그인" class="loginBtn">
-                        <input type="button" onClick="location.href='http://software.hongik.ac.kr/a_team/a_team1/login_register/signup.php'" value="회원가입">
+                        <input type="button" onclick="location.href='http://software.hongik.ac.kr/a_team/a_team1/signup.php'" value="회원가입">
                     </fieldset>
                 </form>
             </div>
         </div>
     </div>
-    
-
-    
+    <script type="text/javascript">
+        window.onload = function(){
+            loginmodal();
+            getNames();
+        }
+       </script>
     <!--header-->
     <div>
         <!--Header Title (Left)-->
         <div class="headertitleleft">
-            <h2><a href="./main.php">DB설계</a></h2>
+            <h2><a href="main.html">Group1</a></h2>
         </div>
         <!--Header Button (Right)-->
         <div class="headertitleright">
-            <button type="button" onclick="logOut()"><a id="logout">로그아웃</a><img src="img/logout.png" alt="button" width="32px"></button>
+            <button type="button" onclick="location.href='logOut.php'"><a id="logout">로그아웃</a><img src="img/logout.png" alt="button"
+                width="32px"></button>
                 <a class="name"></a><a class="sla">님</a>
         </div>
         <!--header-->
@@ -116,24 +71,18 @@
                     <a class="otherheader" onclick="toResult()">추천 받은 보험</a>
                 </span>
                 <span>
-                    <a class="otherheader" onclick="location.href='allIns.php'">전체 보험 상품</a>
+                    <a class="otherheader" onclick="location.href='allIns.html'">전체 보험 상품</a>
                 </span> 
                 <span>
-                    <a class="otherheader" onclick="location.href='myHealthInfo.php'">나의 건강정보</a>
+                    <a class="otherheader" onclick="location.href='myHealthInfo.html'">나의 건강정보</a>
                 </span>
                 <span>
-                    <a class="otherheader" onclick="location.href='myPage.php'">마이페이지</a>
+                    <a class="otherheader" onclick="location.href='myPage.html'">마이페이지</a>
                 </span>
             </nav>
         </header>
     </div>
     </div>
-
-
-    
-
-
-
     <div class="blank"></div>
     <div class="healthContainer">
         <div class="section">
@@ -152,15 +101,15 @@
                         <a> 
                             <div class="textbox">
                                 <h3>시작하기</h3>
-                                <p><a></a>다음은<a class="name"></a> 회원님의 신체 정보입니다.<br>수정이 필요하신 경우 수정하신 후 오른쪽 화살표를 클릭해주세요.</p>
+                                <p><a></a>다음은 <a class="name">@@</a> 회원님의 신체 정보입니다.<br>수정이 필요하신 경우 수정하신 후 오른쪽 화살표를 클릭해주세요.</p>
                                 <div>나이 : <input type="number" name="age" id="age" value="26"> <!--value 부분에 나이-->
                                     <a>&nbsp; 살</a><br>
                                     &nbsp;&nbsp;&nbsp;&nbsp; 키 : <input type="number" name="height" id="height" value="174"><!--value부분에 키-->
                                     <a>&nbsp; cm</a><br>
-                                    체중 : <input type="number" name="weight" id="weight" value="70"><!--value부분에 몸무게-->
+                                     체중 : <input type="number" name="weight" id="weight" value="70"><!--value부분에 몸무게-->
                                     <a>&nbsp; kg</a><br>
                                     <div class="radio">
-                                        <a>성별 : </a>  <!--이부분에 성별-->
+                                     <a>성별 : </a>  <!--이부분에 성별-->
                                         <span id="sex">남</span>
                                         <input type="radio" name="sex" value="man" checked />
                                         <span id="sex">여</span>
@@ -171,7 +120,7 @@
                         </a>
                     </li>
                     <li class="slideitem">
-                        <a></a>
+                        <a>
                             <div class="textbox">
                                 <h3>혈압</h3>
                                 <ul>
@@ -463,8 +412,7 @@
     </div>
     <!--footer-->
     <footer>
-    데이터베이스 및 실습 1조 B789055 전성태, B789071 현동엽, B789033오현석, B789049 이현진<br>
-        주제: 개인 건강정보를 통한 맞춤형 보험 상품 추천 시스템    </footer>
+        데이터베이스 및 실습 1조 B789055 전성태, ...<br>주제:
     </footer>
 </body>
 
