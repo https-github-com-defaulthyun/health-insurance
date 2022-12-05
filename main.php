@@ -35,7 +35,7 @@
                         <br>
                         <!--회원가입 버튼-->
                         <input type="submit" value="로그인" class="loginBtn">
-                        <input type="button" onclick="location.href='http://software.hongik.ac.kr/a_team/a_team1/signup.html'" value="회원가입">
+                        <input type="button" onclick="location.href='http://software.hongik.ac.kr/a_team/a_team1/signup.php'" value="회원가입">
                     </fieldset>
                 </form>
             </div>
@@ -51,7 +51,7 @@
     <div>
         <!--Header Title (Left)-->
         <div class="headertitleleft">
-            <h2><a href="main.html">Group1</a></h2>
+            <h2><a href='main.php'>보험추천</a></h2>
         </div>
         <!--Header Button (Right)-->
         <div class="headertitleright">
@@ -71,13 +71,13 @@
                     <a class="otherheader" onclick="toResult()">추천 받은 보험</a>
                 </span>
                 <span>
-                    <a class="otherheader" onclick="location.href='allIns.html'">전체 보험 상품</a>
+                    <a class="otherheader" onclick="location.href='allIns.php'">전체 보험 상품</a>
                 </span> 
                 <span>
-                    <a class="otherheader" onclick="location.href='myHealthInfo.html'">나의 건강정보</a>
+                    <a class="otherheader" onclick="location.href='myHealthInfo.php'">나의 건강정보</a>
                 </span>
                 <span>
-                    <a class="otherheader" onclick="location.href='myPage.html'">마이페이지</a>
+                    <a class="otherheader" onclick="location.href='myPage.php'">마이페이지</a>
                 </span>
             </nav>
         </header>
@@ -102,11 +102,11 @@
                             <div class="textbox">
                                 <h3>시작하기</h3>
                                 <p><a></a>다음은 <a class="name">@@</a> 회원님의 신체 정보입니다.<br>수정이 필요하신 경우 수정하신 후 오른쪽 화살표를 클릭해주세요.</p>
-                                <div>나이 : <input type="number" name="age" id="age" value="26"> <!--value 부분에 나이-->
+                                <div>나이 : <input type="number" name="age" id="age" value=""><!--value 부분에 나이-->
                                     <a>&nbsp; 살</a><br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp; 키 : <input type="number" name="height" id="height" value="174"><!--value부분에 키-->
+                                    &nbsp;&nbsp;&nbsp;&nbsp; 키 : <input type="number" name="height" id="height" value=""><!--value부분에 키-->
                                     <a>&nbsp; cm</a><br>
-                                     체중 : <input type="number" name="weight" id="weight" value="70"><!--value부분에 몸무게-->
+                                     체중 : <input type="number" name="weight" id="weight" value=""><!--value부분에 몸무게-->
                                     <a>&nbsp; kg</a><br>
                                     <div class="radio">
                                      <a>성별 : </a>  <!--이부분에 성별-->
@@ -117,6 +117,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <script>document.getElementById("age").value = localStorage.getItem('age');
+                                    document.getElementById("weight").value = localStorage.getItem('weight');
+                                    document.getElementById("height").value = localStorage.getItem('height');
+                        </script>
                         </a>
                     </li>
                     <li class="slideitem">

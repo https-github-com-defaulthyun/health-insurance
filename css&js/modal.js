@@ -5,7 +5,9 @@ function loginmodal(){
         document.querySelector('.modalbackground').style.display ='none';
     }
 }
-function getNames(name){
+function getNames(){
+    var name = localStorage.getItem('name');
+    console.log(name);
     let names = document.querySelectorAll('.name');
     [...names].forEach(nm => {
         nm.innerHTML = name;

@@ -25,7 +25,7 @@
     <div>
         <!--Header Title (Left)-->
         <div class="headertitleleft">
-            <h2><a href="main.php">DB설계</a></h2>
+            <h2><a href="main.php">보험추천</a></h2>
         </div>
         <!--Header Button (Right)-->
         <div class="headertitleright">
@@ -56,44 +56,6 @@
             </nav>
         </header>
     </div>
-    </div>
-
-    <h1 class="resultH1"><a class="name" id="resultname">@@</a> 님의 마이페이지</h1>
-    <div class="result">
-        <div class="resultContainer">
-        <p>아이디
-                <?php echo $userid; ?>
-            </p>
-            <p>이름
-                <?php echo $username; ?>
-            </p>
-            <p>성별
-                <?php
-                if ($usersex == 'm') {
-                    echo '남자';
-                } else {
-                    echo '여자';
-                } ?>
-            </p>
-            <p>생일
-                <?php
-                $userbirth = strtotime($userbirth);
-                echo date(" Y-m-d", $userbirth) ?>
-            </p>
-            <p>전화번호
-                <?php echo $userphonenumber; ?>
-            </p>
-            <p>예약된 공연 목록
-                <?php echo  $PerformanceName; ?>
-            </p>
-            <p>
-                <a href="/a_team/a_team4/dbproject/code/register_and_login/changemember.php">회원정보 수정</a>
-            </p>
-            <p>
-                <a href="/a_team/a_team4/dbproject/code/register_and_login/deletemember.php">회원 탈퇴</a>
-            </p>
-
-        </div>
     </div>
 
     <!--footer-->

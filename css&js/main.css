@@ -79,8 +79,18 @@ input[type='button']{
     display: inline;
 }
 
-.loginBtn{
-    margin: 10% 0;
+
+input[type='submit']{
+  height:50px;
+  background-color: rgb(18, 99, 239);
+  border: 0px;
+  color:white;
+  font-size: larger;
+  box-shadow: 3px 3px 5px gray;
+  margin-top: 0%;
+  cursor: pointer;
+  display: inline;
+  margin: 10% 0;
 }
 
 .radio span {

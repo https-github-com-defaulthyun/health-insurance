@@ -46,7 +46,7 @@
             <br>   
             <br>
             <hr><br>
-                <input type="button" onClick="location.href='/a_team/a_team1/main.php '" value="돌아가기" class="signupbtn">
+                <input type="button" onClick="location.href='/a_team/a_team1/main.php'" value="돌아가기" class="signupbtn">
             </fieldset>
         </form>
     </body>

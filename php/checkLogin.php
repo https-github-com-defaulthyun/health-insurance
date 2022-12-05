@@ -34,7 +34,7 @@
     $userpassword = "test1234";
 
     # ID 부분 NULL 아닐 시 
-    if(!is_null($id)) {
+    if(!is_null($id) && $id != '') {
         
         # Oracle DB 서버 접속
         $connect = oci_connect($username, $userpassword , $db); 
@@ -55,7 +55,7 @@
         }
         # 패스워드 NULL 시
         if ( is_null( $encrypted_password ) ) {
-            echo "<script>alert('아이디가 존재하지 않습니다.');location.replace('main.php');</script>";
+            echo "<script>alert('아이디가 존재하지 않습니다.');location.replace('../main.php');</script>";
         }
         
         # 패스워드 복호화
@@ -63,23 +63,75 @@
             session_start();
             $_SESSION['ID'] = $id;
 
+            #이름
             $sql2 = "SELECT CUSTOMER_NAME from CUSTOMERINFO WHERE CUSTOMER_ID='$id'";
 
             # SQL문 DB로 파싱 후 전송
             $result2 = oci_parse($connect, $sql2);
             oci_execute($result2);
+
+            while ($row = oci_fetch_array($result2, OCI_ASSOC) ) {
+                foreach ($row as $item){
+                    $name = $item;
+                }
+            }
+
+            #나이
+            $sql3 = "SELECT TRUNC(MONTHS_BETWEEN(TRUNC(SYSDATE), CUSTOMER_BIRTH) / 12) FROM CUSTOMERINFO WHERE CUSTOMER_ID='$id'";
+
+            $result3 = oci_parse($connect, $sql3);
+            oci_execute($result3);
+
+            while ($row = oci_fetch_array($result3, OCI_ASSOC) ) {
+                foreach ($row as $item){
+                    $age = $item;
+                }
+            }
+
+            #키
+            $sql4 = "SELECT CUSTOMER_HEIGHT FROM CUSTOMERINFO WHERE CUSTOMER_ID='$id'";
+
+            $result4 = oci_parse($connect, $sql4);
+            oci_execute($result4);
+
+            while ($row = oci_fetch_array($result4, OCI_ASSOC) ) {
+                foreach ($row as $item){
+                    $height = $item;
+                }
+            }
+
+            #체중
+            $sql5 = "SELECT CUSTOMER_WEIGHT FROM CUSTOMERINFO WHERE CUSTOMER_ID='$id'";
+
+            $result5 = oci_parse($connect, $sql5);
+            oci_execute($result5);
+
+            while ($row = oci_fetch_array($result5, OCI_ASSOC) ) {
+                foreach ($row as $item){
+                    $weight = $item;
+                }
+            }
+
             
             echo "<script>
+                    alert('로그인 되었습니다.');
+                    localStorage.setItem('age', '$age');
+                    localStorage.setItem('height', '$height');
+                    localStorage.setItem('weight', '$weight');
+                    localStorage.setItem('name', '$name');
                     localStorage.setItem('loggin', 'true');
-                    location.replace('main.php');
+                    location.replace('../main.php');
                 </script>";
             exit;
         }
         # 
         else{
-            echo "<script>alert('비밀번호가 틀렸습니다');location.replace('main.php');</script>";
+            echo "<script>alert('비밀번호가 틀렸습니다');location.replace('../main.php');</script>";
             exit;
         }
+    } else {
+        echo "<script>alert('아이디를 입력해주세요.');location.replace('../main.php');</script>";
+        exit;
     }
 
     // DB 메모리 할당 및 연결 해제 
