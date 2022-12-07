@@ -62,11 +62,21 @@
     <h1 class="resultH1"><a class="name" id="resultname">@@</a> 님의 건강 상태</h1>
     <div class="result">
         <div class="healthinfoContainer">
+
         </div>
     </div>
     <h1 class="resultH1"><a class="name" id="resultname">@@</a> 님께 추천해드리는 보험</h1>
     <div class="result">
         <div class="resultContainer">
+            /*
+            if ( ? == 'warning') {
+                switch($value) :
+                    case 'BP' :
+                        "SELECT PRODUCTNAME,PRICE,COMP,KIND
+                        FROM PRODUCT
+                        WHERE KIND = @dan OR KIND = @dan2;
+                        "
+            */
         </div>
     </div>
     <!--footer-->

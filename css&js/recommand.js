@@ -133,7 +133,7 @@ function recommand() {
                     break;
                 case 'MBW' :
                     name = '체수분'
-                    if(value === '낮음') dan = 'hignbp'
+                    if(value === '낮음') dan = 'highbp'
                     else if (value === '높음') dan = 'heart'
                     else dan = null
                     dan2 = null
