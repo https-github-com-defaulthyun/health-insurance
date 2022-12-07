@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>회원가입</title>
-        <link rel="stylesheet" id="signup" href="css&js/signup.css">
-        <script src="css&js/pwdcheck.js"></script>
+        <link rel="stylesheet" id="signup" href="../css&js/signup.css">
+        <script src="../css&js/pwdcheck.js"></script>
     </head>
     
     <body>
@@ -33,12 +33,27 @@
             <!--성별-->
             성별<br>
             <select name='sex' required>
-                <option>male</option>
-                <option>female</option>
+                <option>남성</option>
+                <option>여성</option>
             </select><br><br>
             <!-- 이메일 -->
-            이메일<br><input type="text" name="email" placeholder="이메일을 입력하세요"> 
-            </div><br><br>
+            이메일<br><input type="text" name="email" class="email" placeholder="이메일을 입력하세요"> 
+            <select class="selectEmail">
+                <option>도메인 선택</option>
+                <option>naver.com</option>
+                <option>hanmail.net</option>
+                <option>daum.net</option>
+                <option>nate.com</option>
+                <option>gmail.com</option>
+                <option>hotmail.com</option>
+                <option>lycos.co.kr</option>
+                <option>empal.com</option>
+                <option>cyworld.com</option>
+                <option>yahoo.com</option>
+                <option>paran.com</option>
+                <option>dreamwiz.com</option>
+                <option>직접입력</option>
+            </select><br><br>
             <!--휴대전화-->
             휴대폰<br><input type="text" name="phone" placeholder="ex) 000-0000-0000"><br><br>
             <!--회원가입 버튼-->
