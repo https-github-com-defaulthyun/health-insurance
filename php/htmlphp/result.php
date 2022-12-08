@@ -70,12 +70,24 @@
         <div class="resultContainer">
             /*
             if ( ? == 'warning') {
-                switch($value) :
-                    case 'BP' :
                         "SELECT PRODUCTNAME,PRICE,COMP,KIND
-                        FROM PRODUCT
-                        WHERE KIND = @dan OR KIND = @dan2;
+                        FROM (
+                            SELECT PRODUCTNAME,PRICE,COMP,KIND
+                            FROM PRODUCT
+                            WHERE KIND = @dan OR KIND = @dan2
+                            ORDER BY PRICE ASC
+                        )
+                        WHERE ROWNUM <= 3
                         "
+            if ( ? == 'danger') {
+                        "SELECT PRODUCTNAME,PRICE,COMP,KIND
+                        FROM (
+                            SELECT PRODUCTNAME,PRICE,COMP,KIND
+                            FROM PRODUCT
+                            WHERE KIND = @dan OR KIND = @dan2
+                            ORDER BY COMP DESC
+                        )
+                        WHERE ROWNUM <= 3
             */
         </div>
     </div>
