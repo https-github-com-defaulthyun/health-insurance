@@ -37,7 +37,7 @@
     if(!is_null($id) && $id != '') {
         
         # Oracle DB 서버 접속
-        $connect = oci_connect($username, $userpassword , $db); 
+        $connect = oci_connect($username, $userpassword , $db, 'KO16MSWIN949'); 
         
         # SQL문
         $sql = "SELECT CUSTOMER_PASSWORD from CUSTOMERINFO WHERE CUSTOMER_ID='$id'";
@@ -75,6 +75,11 @@
                     $name = $item;
                 }
             }
+            $name = iconv("EUC-KR", "UTF-8", $name);
+
+
+
+
 
             #나이
             $sql3 = "SELECT TRUNC(MONTHS_BETWEEN(TRUNC(SYSDATE), CUSTOMER_BIRTH) / 12) FROM CUSTOMERINFO WHERE CUSTOMER_ID='$id'";
@@ -114,7 +119,7 @@
 
             
             echo "<script>
-                    alert('로그인 되었습니다.');
+                    alert('$name 님 환영합니다.');
                     localStorage.setItem('age', '$age');
                     localStorage.setItem('height', '$height');
                     localStorage.setItem('weight', '$weight');

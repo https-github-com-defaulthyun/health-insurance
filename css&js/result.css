@@ -29,12 +29,25 @@ body {
 
 .resultContainer{
     position: relative;
-    width:70%;
-    height: 70vh;
+    min-width:60%;
     border:0px solid rgba(106, 104, 104, 0.6);
     border-radius: 20px;
     background-color: white;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2vw;
+}
+
+.resultContainer>div{
+    text-align: center;
+}
+
+.resultContainer a{
+    color: rgb(95, 94, 94);
+    font-size: 1.1em;
+    font-weight: 700;
 }
 
 .healthinfoContainer{
@@ -42,7 +55,7 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
-    width:70%;
+    width:68%;
     border:0px solid rgba(106, 104, 104, 0.6);
     border-radius: 20px;
     background-color: white;
@@ -81,4 +94,27 @@ body {
     text-align: center;
     background-color: rgb(246, 248, 249);
     box-shadow: 1px 1px 5px rgb(181, 179, 179);
+}
+
+table{
+    padding: 1vw;
+    border: 0px
+}
+
+tr{
+    padding: 0.3vw;
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    border-bottom: 1px,solid,gray;
+    margin: 0.3vw,0;
+}
+
+td{
+    padding: 0.3vw;
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    border-bottom: 1px,solid,gray;
+    margin: 0.3vw,0;
 }

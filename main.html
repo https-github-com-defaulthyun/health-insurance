@@ -6,28 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>보험상품추천사이트</title>
-    <link rel="stylesheet" href="css&js/main.css">
-    <link rel="stylesheet" href="css&js/header.css">
-    <link rel="stylesheet" href="css&js/healthData.css">
+    <link rel="stylesheet" href="./css&js/main.css">
+    <link rel="stylesheet" href="./css&js/header.css">
+    <link rel="stylesheet" href="./css&js/healthData.css">
 
-    <link rel="stylesheet" href="css&js/curheader.css">
+    <link rel="stylesheet" href="./css&js/curheader.css">
 
     <script src="css&js/modal.js"></script>
     <script src="css&js/goTo.js"></script>
     <script src="css&js/healthInput.js"></script>
     <script src="css&js/recommand.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 
 <body>
     <!--modal-->
-    <div id="modal" class="modalbackground">
+    <!-- <div id="modal" class="modalbackground">
         <div class="modalbox">
             <div class="content">
                 <!-- POST 방식으로 넘겨야 됨 -->
-                <form method="post" action="login_register/checkLogin.php" class="loginform">
-                    <fieldset class="loginfieldset">
+                <form method="post" action="login_register/checkLogin.php">
+                    <fieldset>
                         <h1 class="loginH1">로그인</h1>
                         <!--아이디-->
                         아이디<br><input type="text" name="ID" placeholder="ID를 입력하세요."><br><br>
@@ -36,13 +35,13 @@
                         <hr>
                         <br>
                         <!--회원가입 버튼-->
-                        <input type="submit" value="로그인">
-                        <input type="button" class="signupbtn" onclick="location.href='./signup.php'" value="회원가입">
+                        <input type="submit" value="로그인" class="loginBtn">
+                        <input type="button" onclick="location.href='./signup.php'" value="회원가입">
                     </fieldset>
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
     <script type="text/javascript">
         window.onload = function () {
             loginmodal();
@@ -83,6 +82,7 @@
                 </span>
             </nav>
         </header>
+    </div>
     </div>
     <div class="blank"></div>
     <div class="healthContainer">
@@ -273,6 +273,7 @@
                                     <li>기초대사량 : <a class="resultBM"></a> kcal</li>
                                 </ul>
                                 <p class="p2">전부 맞으시다면 오른쪽 제출 버튼을 눌러주세요.</p>
+                                <input type="submit" value="제출" class="loginBtn">
                             </div>
                         </a>
                     </li>
@@ -313,8 +314,7 @@
                         </div>
                         <div>
                             <label for="slide07" class="left"></label>
-                            <label id="label8" for="slide09" class="finalsubmit">
-                            <input type="submit" value="" class="submitbtn" onclick="showResult()"></label>
+                            <label id="label8" for="slide09" class="submit" onclick="showResult()"></label>
                         </div>
                     </div>
                     <script>
@@ -409,37 +409,29 @@
                     </script>
 
                 </ul>
-                <!-- <input type = "hidden" name = "warning" value ="diabetes" />
-                <input type = "hidden" name = "danger" value ="expenses" /> -->
-                <?php 
-                foreach($postvalue as $value)
-                {
-                    echo '<input type="hidden" name="result[]" value="'. $value. '">';
-                } ?>
+                <!-- 페이징 -->
+                <ul class="slide-pagelist">
+                    <li><label for="slide01">시작하기</label></li>
+                    <li><label class="disabled1" for="slide02">혈압</label></li>
+                    <li><label class="disabled2" for="slide03">혈중산소포화도</label></li>
+                    <li><label class="disabled3" for="slide04">체지방률</label></li>
+                    <li><label class="disabled4" for="slide05">골격근량</label></li>
+                    <li><label class="disabled5" for="slide06">체수분</label></li>
+                    <li><label class="disabled6" for="slide07">기초대사량</label></li>
+                    <li><label id="selectFinalBar" class="disabled7" for="slide08">최종확인</label></li>
+                    <script>
+                        document.getElementById('selectFinalBar').onclick = function (event) {
+                            setResult();
+                        };
+                    </script>
+                </ul>
             </fieldset>
-            <!-- 페이징 -->
-            <ul class="slide-pagelist">
-                <li><label for="slide01">시작하기</label></li>
-                <li><label class="disabled1" for="slide02">혈압</label></li>
-                <li><label class="disabled2" for="slide03">혈중산소포화도</label></li>
-                <li><label class="disabled3" for="slide04">체지방률</label></li>
-                <li><label class="disabled4" for="slide05">골격근량</label></li>
-                <li><label class="disabled5" for="slide06">체수분</label></li>
-                <li><label class="disabled6" for="slide07">기초대사량</label></li>
-                <li><label id="selectFinalBar" class="disabled7" for="slide08">최종확인</label></li>
-                <script>
-                    document.getElementById('selectFinalBar').onclick = function (event) {
-                        setResult();
-                    };
-                </script>
-            </ul>
         </form>
-    </div>
-    <!--footer-->
-    <footer>
-        데이터베이스 및 실습 1조 B789055 전성태, B789071 현동엽, B789033 오현석, B789049 이현진<br>
-        주제: 개인 건강정보를 통한 보험 상품 추천 시스템
-    </footer>
+        <!--footer-->
+        <footer>
+            데이터베이스 및 실습 1조 B789055 전성태, B789071 현동엽, B789033 오현석, B789049 이현진<br>
+            주제: 개인 건강정보를 통한 보험 상품 추천 시스템
+        </footer>
 </body>
 
 </html>

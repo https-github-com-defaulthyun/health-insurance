@@ -52,6 +52,8 @@ function setResult(){
     if(document.getElementById('BM').value === '0' || document.getElementById('BM').value === '')
     document.getElementById('BM').value = document.getElementById('calcBM').innerHTML;
     document.querySelector('.resultBM').innerHTML = document.getElementById('BM').value
+
+    showResult()
 }
 
 function BPCheck() {

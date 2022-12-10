@@ -106,6 +106,8 @@ function recommand() {
 
     let warningList = []
     let dangerList = []
+    let warningFeedback = []
+    let dangerFeedback = []
     var feedback = ''
     for (const [key, value] of Object.entries(healthDict)) {
         if(value !== '입력 안됨'){
@@ -113,52 +115,99 @@ function recommand() {
             switch (key) {
                 case 'BP':
                     name = '혈압'
-                    dan = 'highbp'
-                    dan2 = 'brain'
+                    dan = '고혈압'
+                    dan2 = '뇌혈관'
                     break;
                 case 'BOS':
                     name = '혈중 산소 포화도'
-                    dan = 'heart'
-                    dan2 = 'brain'
+                    dan = '심혈관'
+                    dan2 = '뇌혈관'
                     break;
                 case 'BFP' :
                     name = '체지방률'
-                    dan = 'diabetes'
-                    dan2 = 'expenses'
+                    dan = '당뇨'
+                    dan2 = '실비'
                     break;
                 case 'SMM' : 
                     name = '골격근량'
-                    dan = 'expenses'
+                    dan = '실비'
                     dan2 = null
                     break;
                 case 'MBW' :
                     name = '체수분'
-                    if(value === '낮음') dan = 'highbp'
-                    else if (value === '높음') dan = 'heart'
+                    if(value === '낮음') dan = '고혈압'
+                    else if (value === '높음') dan = '심혈관'
                     else dan = null
                     dan2 = null
                     break;
                 case 'BM' :
                     name = '기초대사량'   
-                    dan = 'heart' 
+                    dan = '심혈관' 
                     dan2 = null
                     break;
             }
             if(value === '정상' || value === '표준' || value === '입력안됨') var str = name + ' : ' + value + '<br>'
             else if (value ==='고혈압' || value ==='위독' || value === '과비만' || value ==='위험'){
                 var str = name + ' : <a class="danger">'+ value + '</a><br>'
-                if (dan !== null && !(dan in warningList)) dangerList.push(dan)
-                if(dan2 !== null && !(dan2 in warningList)) dangerList.push(dan2)
+                if (dan !== null) {
+                    dangerList.push(dan);
+                    dangerFeedback.push(name);
+                }
+                if(dan2 !== null) {
+                    dangerList.push(dan2);
+                    dangerFeedback.push(name);
+                }
             }
             else {
                 var str = name + ' : <a class="notNormal">'+ value + '</a><br>'
-                if (dan !== null && !(dan in warningList)) warningList.push(dan)
-                if(dan2 !== null && !(dan2 in warningList)) warningList.push(dan2)
+                if (dan !== null) {
+                    warningList.push(dan);
+                    warningFeedback.push(name);
+                }
+                if(dan2 !== null) {
+                    warningList.push(dan2);
+                    warningFeedback.push(name);
+                }
             }
             feedback = feedback + str
         }
       }
-    localStorage.setItem('warning', warningList);
-    localStorage.setItem('danger', dangerList);
-    return feedback;
+
+      let section = document.querySelector('.section');
+
+    warningList.forEach(function(val){
+        varwarn = document.createElement('input');
+        varwarn.setAttribute('type', 'hidden');
+        varwarn.setAttribute('name', 'warning[]');
+        varwarn.setAttribute('value', val);
+        section.appendChild(varwarn);
+    });
+
+    dangerList.forEach(function(val){
+    vardan = document.createElement('input');
+    vardan.setAttribute('type', 'hidden');
+    vardan.setAttribute('name', 'danger[]');
+    vardan.setAttribute('value', val);
+    section.appendChild(vardan);
+    });
+
+    warningFeedback.forEach(function(val){
+        varwarfeed = document.createElement('input');
+        varwarfeed.setAttribute('type', 'hidden');
+        varwarfeed.setAttribute('name', 'warningFeedback[]');
+        varwarfeed.setAttribute('value', val);
+        section.appendChild(varwarfeed);
+        });
+
+    dangerFeedback.forEach(function(val){
+        vardanfeed = document.createElement('input');
+        vardanfeed.setAttribute('type', 'hidden');
+        vardanfeed.setAttribute('name', 'dangerFeedback[]');
+        vardanfeed.setAttribute('value', val);
+        section.appendChild(vardanfeed);
+        });
+
+    localStorage.setItem('warning', warningList); //
+    localStorage.setItem('danger', dangerList); //
+    localStorage.setItem('feedback', feedback);
 }

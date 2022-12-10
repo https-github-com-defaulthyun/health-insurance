@@ -52,7 +52,7 @@ $userpassword = "test1234";
 if (!is_null($id)) {
 
     # Oracle DB 서버 접속
-    $connect = oci_connect($username, $userpassword, $db);
+    $connect = oci_connect($username, $userpassword, $db, 'KO16MSWIN949');
 
     # 연결 오류 시 Oracle 오류 메시지 표시
     if (!$connect) {
@@ -87,6 +87,7 @@ if (!is_null($id)) {
     } else {
         # 패스워드 암호화
         $encrypted_password = password_hash($password, PASSWORD_DEFAULT);
+        $name = iconv("UTF-8", "EUC-KR", $name);
 
         # 유저 추가 (INSERT 문)
         $sql_add_user = "INSERT INTO CUSTOMERINFO VALUES ('$id', '$encrypted_password','$name',to_date('$birth', 'YYYY-MM-DD'),'$height','$weight','$sex','$email','$phone',to_date(sysdate,'YYYY-MM-DD'))";

@@ -27,10 +27,10 @@
 .section .slidewrap {
     max-width: 1200px;
     margin: 0 auto;
-    width: 100%;
     height: 100%;
     border-radius: 30px;
     background-color: black;
+    border: 0px;
     margin-bottom: -2%;
     box-shadow: 3.5px 3.5px 5px rgb(144, 144, 144);
 }
@@ -58,7 +58,7 @@
     width: 100%;
 }
 
-.section .slidelist label {
+.section .slidelist label:not(.finalsubmit) {
     position: absolute;
     z-index: 10;
     top: 50%;
@@ -345,6 +345,15 @@
 .section .submit {
     right: 30px;
     background: url('../img/paging/submit.png') center center / 60% no-repeat;
+}
+
+.section .finalsubmit {
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    right: 30px;
 }
 
 .section input[id="slide01"]:checked~.slidewrap .slide-control>div:nth-child(1) {

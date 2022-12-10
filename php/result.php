@@ -9,6 +9,7 @@
     <script type="text/javascript">
         window.onload = function(){
             getNames();
+            showResult()
         }
        </script>
     <link rel="stylesheet" href="css&js/result.css">
@@ -20,6 +21,7 @@
     <script src="css&js/recommand.js"></script>
 
 </head>
+
 
 <body>
     <!--header-->
