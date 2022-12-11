@@ -11,7 +11,7 @@
     
     <body>
         <!-- POST 방식으로 값을 넘겨야 됨 -->
-        <form action = "php/signup.php" method="POST">
+        <form action = "./login_register/signup_ok.php" method="POST">
             <fieldset>
             <div>
             <h1>회원가입</h1><br>
@@ -33,13 +33,27 @@
             <!--성별-->
             성별<br>
             <select name='sex' required>
-                <option>male</option>
-                <option>female</option>
+                <option>남성</option>
+                <option>여성</option>
             </select><br><br>
             <!-- 이메일 -->
-            이메일<br><input type="text" name="email" placeholder="이메일을 입력하세요"> 
-            </div><br><br>
-            <!--휴대전화-->
+            이메일<br><input type="text" name="email" class="email" placeholder="이메일을 입력하세요"> 
+            <select name='domain' class="selectEmail" aria-placeholder="도메인 선택" required>
+                <option value="" disabled selected>도메인 선택</option>
+                <option>@naver.com</option>
+                <option>@hanmail.net</option>
+                <option>@daum.net</option>
+                <option>@nate.com</option>
+                <option>@gmail.com</option>
+                <option>@hotmail.com</option>
+                <option>@lycos.co.kr</option>
+                <option>@empal.com</option>
+                <option>@cyworld.com</option>
+                <option>@yahoo.com</option>
+                <option>@paran.com</option>
+                <option>@dreamwiz.com</option>
+                <option>직접입력</option>
+            </select><br><br>
             휴대폰<br><input type="text" name="phone" placeholder="ex) 000-0000-0000"><br><br>
             <!--회원가입 버튼-->
             <input type="submit" value="회원가입" class="signupbtn">

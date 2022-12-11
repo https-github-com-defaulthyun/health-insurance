@@ -140,13 +140,13 @@ if (!is_null($_SESSION["ID"])) {
     </div>
     </div>
     <!--추천-->
-    <h1 class="resultH1"><a class="name" id="resultname">@@</a> 님의 건강 상태</h1>
+    <h1 class="resultH1">&nbsp;&nbsp;<a class="name" id="resultname">@@</a> 님의 건강 상태</h1>
     <div class="result">
         <div class="healthinfoContainer">
         </div>
     </div>
-    <h1 class="resultH1"><a class="name" id="resultname">@@</a> 님께 추천해드리는 보험</h1>
     <div class="result">
+    <p class="labeldan">위험</p>
         <div class="resultContainer">
             <div>
                 <h2><a style="color: rgb(235, 73, 73); font-size: 1em;font-weight: 700;">위험</a> 요소에 대한 보험 추천</h2>
@@ -157,12 +157,12 @@ if (!is_null($_SESSION["ID"])) {
                     $danger_Result = oci_parse($connect, $danger);
                     oci_execute($danger_Result);
                     $convalue = iconv("EUC-KR", "UTF-8", $value);
-                    echo "<br><h3><a>$danobj[$convalue]</a> 에 대한 <a>$convalue</a> 보험추천</h3>";
-                    echo "<table border='1'>\n<th>보험사</th><th>보험명</th><th>가입금액(원)</th><th>보장금액(원)</th><th>주 보장 항목</th><th>url</th>";
+                    echo "<br><h3><a>$danobj[$convalue]</a> 에 대한 <a>$convalue</a> 보험추천</h3><br>";
+                    echo "<table class='table'>\n<th>보험사</th><th>보험명</th><th>가입금액(원)</th><th>보장금액(원)</th><th>주 보장 항목</th><th>보험사 URL</th>";
                     while (($dan = oci_fetch_array($danger_Result, OCI_ASSOC + OCI_RETURN_NULLS)) != false) {
                         echo "<tr>\n";
                         foreach ($dan as $item) {
-                            echo "    <td>" . ($item !== null ? htmlentities(iconv("EUC-KR", "UTF-8", $item), ENT_QUOTES) : "&nbsp;") . "</td>\n";
+                            echo "    <td><div class='dandiv'>" . ($item !== null ? htmlentities(iconv("EUC-KR", "UTF-8", $item), ENT_QUOTES) : "&nbsp;") . "</div></td>\n";
                         }
                         echo "</tr>\n";
                     }
@@ -173,25 +173,39 @@ if (!is_null($_SESSION["ID"])) {
         </div>
     </div>
     <div class="result">
+    <p class="labelwarn">주의</p>
         <div class="resultContainer">
             <div>
                 <h2><a style="color: rgb(18, 99, 239);font-size: 1em; font-weight: 700;">주의</a> 요소에 대한 보험 추천</h2>
                 <?php
+                $count = 0;
                 foreach ($warnList as $key => $value) {
                     $warning = "SELECT NAME,PRODUCTNAME,PRICE,COMP,KIND,URL FROM PRODUCT,INS WHERE KIND = '$value' AND PRODUCT.INSID = INS.INSID ORDER BY PRICE ASC";
                     # sql문 DB로 파싱 후 전송
                     $warning_Result = oci_parse($connect, $warning);
                     oci_execute($warning_Result);
                     $convalue = iconv("EUC-KR", "UTF-8", $value);
-                    echo "<br><h3><a>$warnobj[$convalue]</a> 에 대한 <a>$convalue</a> 보험추천</h3>";
-                    echo "<table border='1'>\n<th>보험사</th><th>보험명</th><th>가입금액(원)</th><th>보장금액(원)</th><th>주 보장 항목</th><th>url</th>";
-                    while (($warn = oci_fetch_array($warning_Result, OCI_ASSOC + OCI_RETURN_NULLS)) != false) {
-                        echo "<tr>\n";
-                        foreach ($warn as $item) {
-                            echo "    <td>" . ($item !== null ? htmlentities(iconv("EUC-KR", "UTF-8", $item), ENT_QUOTES) : "&nbsp;") . "</td>\n";
-                        }
-                        echo "</tr>\n";
-                    }
+                    echo "<br><h3><a>$warnobj[$convalue]</a> 에 대한 <a>$convalue</a> 보험추천</h3><br>";
+                    echo "<table class='table'>\n<th>보험사</th><th>보험명</th><th>가입금액(원)</th><th>보장금액(원)</th><th>주 보장 항목</th><th>보험사 URL</th>";
+                    while (($warn = oci_fetch_array($warning_Result, OCI_ASSOC)) != false) {
+                        $name = iconv("EUC-KR", "UTF-8", $warn['NAME']);
+                        $productname = iconv("EUC-KR", "UTF-8", $warn['PRODUCTNAME']);
+                        $price = iconv("EUC-KR", "UTF-8", $warn['PRICE']);
+                        $comp = iconv("EUC-KR", "UTF-8", $warn['COMP']);
+                        $kind = iconv("EUC-KR", "UTF-8", $warn['KIND']);
+                        $url = iconv("EUC-KR", "UTF-8", $warn['URL']);
+                        echo ("
+                            <tr>\n
+                                <td><div class='warndiv insname'><p align='center' value=$count onclick='test($count);'>{$name}</p></div></td>
+                                <td><div class='warndiv'><p align='center'>{$productname}</p></div></td>
+                                <td><div class='warndiv'>{$price}</div></td>
+                                <td><div class='warndiv'>{$comp}</div></td>
+                                <td><div class='warndiv'><p align='center'>{$kind}</p></div></td>
+                                <td><div class='warndiv'><a href='$url'>{$url}</a></div></td>
+                            </tr>
+                             ");
+                        $count = $count + 1;
+                            }
                     echo "</table>\n";
                 }
 
@@ -203,6 +217,19 @@ if (!is_null($_SESSION["ID"])) {
             </div>
         </div>
     </div>
+    <script>
+        function test(int){
+            alert(int);
+        }
+        // function zzim(name){
+        //     let result = document.querySelector('.result');
+        //                             varwarn = document.createElement('input');
+        //                             varwarn.setAttribute('type', 'hidden');
+        //                             varwarn.setAttribute('name', 'zzim[]');
+        //                             varwarn.setAttribute('value', $name);
+        //                             result.appendChild(varwarn);
+        // };
+    </script>
     <!--footer-->
     <footer id="foot">
         데이터베이스 및 실습 1조 B789055 전성태, B789071 현동엽, B789033오현석, B789049 이현진<br>
