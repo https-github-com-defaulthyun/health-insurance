@@ -28,7 +28,7 @@ $userpassword = "test1234";
 if (!is_null($_SESSION["ID"])) {
 
     # Oracle DB 서버 접속
-    $connect = oci_connect($username, $userpassword, $db);
+    $connect = oci_connect($username, $userpassword, $db,'AL32UTF8');
 
     # 연결 오류 시 Oracle 오류 메시지 표시
     if (!$connect) {
@@ -36,28 +36,6 @@ if (!is_null($_SESSION["ID"])) {
         trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
     }
 
-    # sql문 (ID확인)
-    $sql = "SELECT * FROM CUSTOMERINFO WHERE CUSTOMER_ID = '$id'";
-
-    # sql문 DB로 파싱 후 전송
-    $send = oci_parse($connect, $sql);
-    oci_execute($send);
-    
-    while ($row = oci_fetch_array($send,OCI_ASSOC)) {
-        $id = $row["CUSTOMER_ID"];
-        $name = $row["CUSTOMER_NAME"];
-        $birth = $row["CUSTOMER_BIRTH"];
-        $weight = $row["CUSTOMER_WEIGHT"];
-        $height = $row["CUSTOMER_HEIGHT"];
-        $sex = $row["CUSTOMER_SEX"];
-        $email = $row["CUSTOMER_EMAIL"];
-        $phone = $row["CUSTOMER_PHONENUM"];
-    }
-    $id = $_SESSION["ID"];
-
-    // DB 메모리 할당 및 연결 해제 
-    oci_free_statement($send);
-    oci_close($connect);
 }
 ?>
 
@@ -74,7 +52,7 @@ if (!is_null($_SESSION["ID"])) {
             getNames();
         }
        </script>
-    <link rel="stylesheet" href="css&js/result.css">
+    <link rel="stylesheet" href="css&js/myhealthinfo.css">
     <link rel="stylesheet" href="css&js/header.css">
     <link rel="stylesheet" href="css&js/curheader.css">
 
@@ -93,9 +71,9 @@ if (!is_null($_SESSION["ID"])) {
         </div>
         <!--Header Button (Right)-->
         <div class="headertitleright">
-            <button type="button" onclick="logOut()"><a id="logout">로그아웃</a><img src="img/logout.png" alt="button"
-                width="32px"></button>
-                <a class="name"></a><a class="sla">님</a>
+            <button type="button" onclick="location.href='login_register/logOut.php'"><a id="logout">로그아웃</a><img
+                    src="img/logout.png" alt="button" width="32px"></button>
+            <a class="name"></a><a class="sla">님</a>
         </div>
         <!--header-->
         <header class="header">
@@ -122,43 +100,97 @@ if (!is_null($_SESSION["ID"])) {
     </div>
     </div>
 
-     <!--건강정보-->
-    <h1 class="resultH1"><a class="name" id="resultname"></a> 님의 건강 상태</h1>
-    <div class="result">
-        <div class="healthinfoContainer">
-        </div>
-    </div>
-
     <!--세부건강정보-->
-    <h1 class="resultH1">세부 건강 정보</h1>
+    <h1 class="resultH1"><a class="name" id="resultname">@@</a>님의 건강 정보 기록</h1>
     <div class="result">
         <div class="resultContainer">
             <?php
             $connect = oci_connect($username, $userpassword, $db);
             
-            $query = "SELECT TO_CHAR(CUSTOMER_BIRTH, 'YYYY/MM/DD'), HEALTH.HEALTH_BP, HEALTH.HEALTH_BOS,HEALTH.HEALTH_BFP, HEALTH.HEALTH_SMM, HEALTH.HEALTH_MBW, HEALTH.HEALTH_BM
+            $query = "SELECT CREATED_DATE, CUSTOMERINFO.CUSTOMER_BIRTH, HEALTH.HEALTH_BP, HEALTH.HEALTH_BOS,HEALTH.HEALTH_BFP, HEALTH.HEALTH_SMM, HEALTH.HEALTH_MBW, HEALTH.HEALTH_BM
                         FROM CUSTOMERINFO JOIN HEALTH ON CUSTOMERINFO.CUSTOMER_ID = HEALTH.CUSTOMER_ID
                         WHERE CUSTOMERINFO.CUSTOMER_ID = '$id'
                         ORDER BY HEALTH.CREATED_DATE DESC";
             $info = oci_parse($connect,$query);
             oci_execute($info);
 
-            echo "<table class='table'>\n<th>날짜</th><th>혈압</th><th>혈중산소포화도</th><th>체지방률</th><th>골격근량</th><th>체수분</th><th>기초대사량</th>";
-            while (($in = oci_fetch_array($info, OCI_ASSOC + OCI_RETURN_NULLS)) != false) {
-                echo "<tr>\n";
-                foreach ($in as $item) {
-                    echo "    <td>" . ($item !== null ? htmlentities(iconv("EUC-KR", "UTF-8", $item), ENT_QUOTES) : "&nbsp;") . "</td>\n";
-                }
-                echo "</tr>\n";
-            }
+            echo "<table class='table'>\n<th>입력된 날짜</th><th>생년월일</th><th>혈압</th><th>혈중산소포화도</th><th>체지방률</th><th>골격근량</th><th>체수분</th><th>기초대사량</th>";
+            while (($in = oci_fetch_array($info, OCI_ASSOC)) != false) {
+                echo ("
+                <tr>\n
+                    <td>{$in['CREATED_DATE']}</td>
+                    <td>{$in['CUSTOMER_BIRTH']}</td>
+                    <td class='BP'>{$in['HEALTH_BP']}</td>
+                    <td class='BOS'>{$in['HEALTH_BOS']}</td>
+                    <td class='BFP'>{$in['HEALTH_BFP']}</td>
+                    <td class='SMM'>{$in['HEALTH_SMM']}</td>
+                    <td class='MBW'>{$in['HEALTH_MBW']}</td>
+                    <td class='BM'>{$in['HEALTH_BM']}</td>
+                </tr>
+                 ");
+            };
             echo "</table>\n";
                     
-
             oci_free_statement ($info);
             oci_close ($connect)
             ?>
         </div>
     </div>
+
+    <script>
+        let BP = document.querySelectorAll('.BP');
+        BP.forEach((e) => {
+            if(120 <= e.innerText && e.innerText<= 140){
+                e.style.color='rgb(18, 99, 239)';
+            }else if (e.innerText > 140) e.style.color='rgb(235, 73, 73)';
+        });
+        let BOS = document.querySelectorAll('.BOS');
+        BOS.forEach((e) => {
+            if (80 < e.innerText && e.innerText < 95) e.style.color='rgb(18, 99, 239)';
+            else if (e.innerText <= 80) e.style.color='rgb(235, 73, 73)';
+        });
+
+        let BFP = document.querySelectorAll('.BFP');
+        console.log(localStorage.getItem('sex'));
+        BFP.forEach((e) => {
+            if(localStorage.getItem('sex') === 'man'){
+                if(localStorage.getItem('age') >= 30){
+                if(e.innerText < 17) e.style.color='rgb(18, 99, 239)';
+                else if(17 <= e.innerText && e.innerText < 23) e.style.color='black';
+                else if (23 <= e.innerText && e.innerText < 28) e.style.color='rgb(18, 99, 239)';
+                else if (28 <= e.innerText && e.innerText < 38) e.style.color='rgb(18, 99, 239)';
+                else e.style.color='rgb(235, 73, 73)';
+        }        else{
+            if(e.innerText < 14) e.style.color='rgb(18, 99, 239)';
+            else if(14 <= e.innerText && e.innerText < 20) e.style.color='black';
+            else if (20 <= e.innerText && e.innerText < 25) e.style.color='rgb(18, 99, 239)';
+            else if (25 <= e.innerText && e.innerText < 35) e.style.color='rgb(18, 99, 239)';
+            else e.style.color='rgb(235, 73, 73)';
+        }
+            } else {
+                if(localStorage.getItem('age') >= 30){
+            if(e.innerText < 20) e.style.color='rgb(18, 99, 239)';
+            else if(20 <= e.innerText && e.innerText < 27) e.style.color='black';
+            else if (27 <= e.innerText && e.innerText < 33) e.style.color='rgb(18, 99, 239)';
+            else if (33 <= e.innerText && e.innerText < 43) e.style.color='rgb(18, 99, 239)';
+            else e.style.color='rgb(235, 73, 73)';
+        }        else{
+            if(e.innerText < 17) e.style.color='rgb(18, 99, 239)';
+            else if(17 <= e.innerText && e.innerText < 24) e.style.color='black';
+            else if (24 <= e.innerText && e.innerText < 30) e.style.color='rgb(18, 99, 239)';
+            else if (30 <= e.innerText && e.innerText < 40)e.style.color='rgb(18, 99, 239)';
+            else e.style.color='rgb(235, 73, 73)';
+        }
+            }
+        });
+
+        let MBW = document.querySelectorAll('.MBW');
+        MBW.forEach((e) => {
+            if (45 < e.innerText && e.innerText < 70) e.style.color='black';
+            else e.style.color='rgb(18, 99, 239)';
+        });
+
+    </script>
     
     <!--footer-->
     <footer>

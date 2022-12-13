@@ -56,11 +56,11 @@
         </header>
     </div>
     </div>
-    <h1 class="resultH1">전체 보험상품들</h1>
+    <h1 class="resultH1">검색된 보험상품들</h1>
     <div class="result">
         <div class="resultContainer">
             <div>
-                    <form action = "allIns_ok.php" method="post" class="option">
+            <form action = "allIns_ok.php" method="post" class="option">
                         <select name="kind" class="select">
                             <option>고혈압</option>
                             <option>뇌혈관</option>
@@ -75,6 +75,9 @@
                         # 500 에러 시 확인 (디버깅용)
                         // error_reporting(E_ALL);
                         // ini_set('display_errors', '1');
+                        
+                        # 요청받은 항목 변수 확인
+                        $kind = $_POST['kind'];
                         
                         # DB 접속 부분 
                         $db =
@@ -101,7 +104,7 @@
                         }
                         
                         # 두 테이블 Inner 조인 (INSID 중복이므로)
-                        $sql = "SELECT INS.NAME, PRODUCT.PRODUCTNAME, PRODUCT.PRICE, PRODUCT.COMP, PRODUCT.KIND, INS.URL, INSNUMBER.TELNUMBER FROM INS JOIN PRODUCT ON INS.INSID = PRODUCT.INSID JOIN INSNUMBER ON INS.TEL = INSNUMBER.TEL";
+                        $sql = "SELECT INS.NAME, PRODUCT.PRODUCTNAME, PRODUCT.PRICE, PRODUCT.COMP, PRODUCT.KIND, INS.URL, INSNUMBER.TELNUMBER FROM INS JOIN PRODUCT ON INS.INSID = PRODUCT.INSID JOIN INSNUMBER ON INS.TEL = INSNUMBER.TEL WHERE PRODUCT.KIND = '$kind'";
                         
                         # sql문 DB로 파싱 후 전송
                         $send = oci_parse($connect, $sql);

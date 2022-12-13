@@ -122,9 +122,10 @@ footer {
     font-size: smaller;
     border-top: 1px solid hsl(0, 1%, 72%);
     border-bottom: 0px;
-    position: absolute;
+    position: relative;
     height:max-content;
-    top:105vh;
+    margin-top: 5vh;
+    top:15vh;
     width: 98%;
     z-index: 10;
     line-height: 20px;

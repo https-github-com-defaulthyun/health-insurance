@@ -8,7 +8,9 @@ function recommand() {
     // console.log('BP : ' + BP + ' BOS : ' + BOS + ' BFP : ' + BFP + ' SMM : ' + SMM + ' MBW : ' + MBW + ' BM : ' + BM)
 
     var sex = document.querySelector('input[name="sex"]:checked').value;
+    localStorage.setItem('sex',sex);
     var weight = document.getElementById('weight').value;
+    localStorage.setItem('weight',weight);
 
     var healthDict = {}
     //혈압 추천
@@ -24,7 +26,9 @@ function recommand() {
     else if (80 < BOS && BOS < 90) healthDict['BOS'] = '저산소증'
     else healthDict['BOS'] = '위독'
 
+
     var age = document.getElementById('age').value
+    localStorage.setItem('age',age);
     if(sex === 'man'){
         //체지방률
         if(age >= 30){

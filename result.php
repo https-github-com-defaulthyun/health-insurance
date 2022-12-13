@@ -42,19 +42,40 @@ if (!is_null($_SESSION["ID"])) {
     $warningFeedback = $_SESSION['warningFeedback'];
     $dangerFeedback = $_SESSION['dangerFeedback'];
 
+
+
+    $len = (int) count($warnarr);
+
+    $warnarr = array_slice($warnarr, 0, $len / 2);
+
+    $len2 = (int) count($danarr);
+
+    $danarr = array_slice($danarr, 0, $len2 / 2);
+
+    $checkWarn = array();
+
     for ($i = 0; $i < count($warnarr); $i++) {
-        $warnobj[$warnarr[$i]] = $warningFeedback[$i];
+        if(in_array($warnarr[$i], $checkWarn)){
+            $warnobj[$warnarr[$i]] = $warnobj[$warnarr[$i]] . ' , ' . $warningFeedback[$i];
+        }
+        else {
+            $warnobj[$warnarr[$i]] = $warningFeedback[$i];
+            array_push($checkWarn, $warnarr[$i]);
+        }
         // echo "<a>$warnarr[$i] == $warningFeedback[$i]</a>";
     }
+
+    $checkDan = array();
     for ($i = 0; $i < count($danarr); $i++) {
-        $danobj[$danarr[$i]] = $dangerFeedback[$i];
+        if(in_array($danarr[$i], $checkDan)){
+            $danobj[$danarr[$i]] = $danobj[$danarr[$i]] . ' , ' . $dangerFeedback[$i];
+        } else {
+            $danobj[$danarr[$i]] = $dangerFeedback[$i];
+            array_push($checkDan, $danarr[$i]);
+        }
         // echo "<a>$danarr[$i] == $dangerFeedback[$i]</a>";
     }
 
-    $warnarr = array_unique($warnarr);
-    $danarr = array_unique($danarr);
-    $dangerFeedback = array_unique($dangerFeedback);
-    $warningFeedback = array_unique($warningFeedback);
     
     //warn
     $warnList = array();
@@ -71,6 +92,10 @@ if (!is_null($_SESSION["ID"])) {
         $danarr[$i] = iconv("UTF-8", "EUC-KR", $danarr[$i]);
         array_push($danList, $danarr[$i]);
     }
+
+    
+    $warnList = array_unique($warnList);
+    $danList = array_unique($danList);
 
     # DB 메모리 할당 및 연결 해제 
 
@@ -151,6 +176,7 @@ if (!is_null($_SESSION["ID"])) {
             <div>
                 <h2><a style="color: rgb(235, 73, 73); font-size: 1em;font-weight: 700;">위험</a> 요소에 대한 보험 추천</h2>
                 <?php
+                $count = 0;
                 foreach ($danList as $key => $value) {
                     $danger = "SELECT NAME,PRODUCTNAME,PRICE,COMP,KIND,URL FROM PRODUCT,INS WHERE KIND = '$value' AND PRODUCT.INSID = INS.INSID ORDER BY COMP DESC";
                     # sql문 DB로 파싱 후 전송
@@ -159,13 +185,25 @@ if (!is_null($_SESSION["ID"])) {
                     $convalue = iconv("EUC-KR", "UTF-8", $value);
                     echo "<br><h3><a>$danobj[$convalue]</a> 에 대한 <a>$convalue</a> 보험추천</h3><br>";
                     echo "<table class='table'>\n<th>보험사</th><th>보험명</th><th>가입금액(원)</th><th>보장금액(원)</th><th>주 보장 항목</th><th>보험사 URL</th>";
-                    while (($dan = oci_fetch_array($danger_Result, OCI_ASSOC + OCI_RETURN_NULLS)) != false) {
-                        echo "<tr>\n";
-                        foreach ($dan as $item) {
-                            echo "    <td><div class='dandiv'>" . ($item !== null ? htmlentities(iconv("EUC-KR", "UTF-8", $item), ENT_QUOTES) : "&nbsp;") . "</div></td>\n";
-                        }
-                        echo "</tr>\n";
-                    }
+                    while (($dan = oci_fetch_array($danger_Result, OCI_ASSOC)) != false) {
+                        $name = iconv("EUC-KR", "UTF-8", $dan['NAME']);
+                        $productname = iconv("EUC-KR", "UTF-8", $dan['PRODUCTNAME']);
+                        $price = iconv("EUC-KR", "UTF-8", $dan['PRICE']);
+                        $comp = iconv("EUC-KR", "UTF-8", $dan['COMP']);
+                        $kind = iconv("EUC-KR", "UTF-8", $dan['KIND']);
+                        $url = iconv("EUC-KR", "UTF-8", $dan['URL']);
+                        echo ("
+                            <tr>\n
+                                <td><div align='center' onclick='zzim($count);' class='insname'>{$name}</div></td>
+                                <td><div><p align='center'>{$productname}</p></div></td>
+                                <td><div>{$price}</div></td>
+                                <td><div>{$comp}</div></td>
+                                <td><div><p align='center'>{$kind}</p></div></td>
+                                <td><div><a href='$url'>{$url}</a></div></td>
+                            </tr>
+                             ");
+                        $count = $count + 1;
+                            }
                     echo "</table>\n";
                 }
                 ?>
@@ -178,7 +216,6 @@ if (!is_null($_SESSION["ID"])) {
             <div>
                 <h2><a style="color: rgb(18, 99, 239);font-size: 1em; font-weight: 700;">주의</a> 요소에 대한 보험 추천</h2>
                 <?php
-                $count = 0;
                 foreach ($warnList as $key => $value) {
                     $warning = "SELECT NAME,PRODUCTNAME,PRICE,COMP,KIND,URL FROM PRODUCT,INS WHERE KIND = '$value' AND PRODUCT.INSID = INS.INSID ORDER BY PRICE ASC";
                     # sql문 DB로 파싱 후 전송
@@ -196,12 +233,12 @@ if (!is_null($_SESSION["ID"])) {
                         $url = iconv("EUC-KR", "UTF-8", $warn['URL']);
                         echo ("
                             <tr>\n
-                                <td><div class='warndiv insname'><p align='center' value=$count onclick='test($count);'>{$name}</p></div></td>
-                                <td><div class='warndiv'><p align='center'>{$productname}</p></div></td>
-                                <td><div class='warndiv'>{$price}</div></td>
-                                <td><div class='warndiv'>{$comp}</div></td>
-                                <td><div class='warndiv'><p align='center'>{$kind}</p></div></td>
-                                <td><div class='warndiv'><a href='$url'>{$url}</a></div></td>
+                                <td><div align='center' onclick='zzim($count);' class='insname'>{$name}</div></td>
+                                <td><div><p align='center'>{$productname}</p></div></td>
+                                <td><div>{$price}</div></td>
+                                <td><div>{$comp}</div></td>
+                                <td><div><p align='center'>{$kind}</p></div></td>
+                                <td><div><a href='$url'>{$url}</a></div></td>
                             </tr>
                              ");
                         $count = $count + 1;
@@ -217,18 +254,36 @@ if (!is_null($_SESSION["ID"])) {
             </div>
         </div>
     </div>
+    <form method="post" action="zzim.php" >
+        <fieldset>
+            <div class='hidden'></div>
+            <input type='submit' value='선택한 보험사 찜하기' class='zzimbtn'>
+        </fieldset>
+    </form>
     <script>
-        function test(int){
-            alert(int);
+        function zzim(int){
+            let insname = document.querySelectorAll('.insname');
+            console.log(insname.item(int).innerText)
+            let result = document.querySelector('.hidden');
+                                    varwarn = document.createElement('input');
+                                    varwarn.setAttribute('type', 'hidden');
+                                    varwarn.setAttribute('name', 'zzim[]');
+                                    varwarn.setAttribute('value', insname.item(int).innerText);
+                                    result.appendChild(varwarn);
+        };
+        let insnameDiv = document.querySelectorAll('.table tbody tr td:nth-child(1)');
+        function handleClick(event) {
+        // div에서 모든 "click" 클래스 제거
+        insnameDiv.forEach((e) => {
+            e.classList.remove("click");
+        });
+        // 클릭한 div만 "click"클래스 추가
+        event.target.classList.add("click");
         }
-        // function zzim(name){
-        //     let result = document.querySelector('.result');
-        //                             varwarn = document.createElement('input');
-        //                             varwarn.setAttribute('type', 'hidden');
-        //                             varwarn.setAttribute('name', 'zzim[]');
-        //                             varwarn.setAttribute('value', $name);
-        //                             result.appendChild(varwarn);
-        // };
+
+        insnameDiv.forEach((e) => {
+        e.addEventListener("click", handleClick);
+        });
     </script>
     <!--footer-->
     <footer id="foot">

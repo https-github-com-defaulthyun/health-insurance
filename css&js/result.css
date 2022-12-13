@@ -170,7 +170,14 @@ body {
 }
 .table tbody tr td:nth-child(1) {
 	border-radius: 5px 0 0 5px;
+    background-color: rgba(20, 124, 245,0.55);
+    color: white;
 }
+
+.table tbody tr td:nth-child(1):hover {
+    background-color: rgba(20, 124, 245,1);
+}
+
 .table tbody tr td:nth-last-child(1) {
 	border-radius: 0 5px 5px 0;
 }
@@ -223,7 +230,7 @@ td:nth-child(4){
 }
 
 td:nth-child(4)>div{
-    background-color: rgb(20, 124, 245);
+    background-color: rgb(235, 73, 73);
     padding: 0.8vw;
     border-radius: 5px;
     color: white;
@@ -238,3 +245,104 @@ td:nth-last-child(1){
     padding-left: 3vw;
     padding-right: 3vw;
 }
+
+form{
+    position: relative;
+    top:10vh;
+}
+
+.zzimbtn{
+    position: relative;
+}
+
+.insname{
+    padding: 1vw;
+    cursor: pointer;
+}
+
+
+.click {
+    background-color: rgba(20, 124, 245,1);
+    border-radius: 10px;
+  }
+
+form{
+    border: 0px;
+  }
+
+fieldset{
+    border: 0 solid rgb(239, 239, 239);
+}
+
+.zzimbtn{
+    position: relative;
+    left: 6.3%;
+    top: -2vh;
+    width: 16vw;
+    height:6vh;
+    background-color: rgba(20, 124, 245,1);
+    border-radius: 5px;
+    border: 0px;
+    color:white; 
+    font-size: larger;
+    box-shadow: 3px 3px 5px gray;
+    cursor: pointer;
+}
+
+.option{
+    position: relative;
+    top:-2vw;
+}
+
+.select{
+    width: 6vw;
+    height: 5.2vh;
+    border-radius: 5px;
+    border: 2px solid rgb(235, 73, 73);
+}
+
+.allinsbtn{
+    margin-left: 1vw;
+    width: 6vw;
+    height:5vh;
+    background-color: rgb(235, 73, 73);
+    border-radius: 5px;
+    border: 0px;
+    color:white; 
+    font-size: 1em;
+    box-shadow: 1px 1px 2px gray;
+    cursor: pointer;
+}
+
+.mypageCon{
+    background-color: white;
+    margin: 0 auto;
+    width: 60%;
+    background-color: rgba(255,255,255,0.8); 
+    border: 0px;
+    padding: 50px;
+    text-align: center;
+    line-height: 10px;
+    padding-left: 10vw;
+}
+
+.mypageCon>div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5vw;
+}
+
+
+.myPageTable{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mypageCon span{
+    display: inline-block;
+    margin: 3vw;
+    font-size: 1.4em;
+}
+
